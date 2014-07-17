@@ -1,1 +1,11 @@
 /* Empty. Add your own CSS if you like */
+.scroll h1{
+    color: #ff0000;
+}
+
+.slider {
+    height: 100%;
+}
+.blue {
+    background-color: #ff0000;
+}

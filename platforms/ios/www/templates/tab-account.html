@@ -1,5 +1,22 @@
 <ion-view title="Account">
-  <ion-content class="has-header padding">
-    <h1>Account</h1>
-  </ion-content>
+    <ion-content class="has-header padding">
+        <div class="list card" ng-repeat="card in cards">
+
+            <div class="item item-avatar">
+                <img src="{{card.avatar}}">
+                <h2>{{card.title}}</h2>
+                <p>{{card.desc}}</p>
+            </div>
+
+            <div class="item item-image">
+                <img src="{{card.img}}">
+            </div>
+
+            <a class="item item-icon-left assertive" href="#">
+                <i class="icon ion-music-note"></i>
+                Start listening
+            </a>
+
+        </div>
+    </ion-content>
 </ion-view>
