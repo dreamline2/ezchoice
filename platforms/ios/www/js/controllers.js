@@ -17,7 +17,12 @@ angular.module('starter.controllers', [])
   }
 })
 
-.controller('AccountCtrl', function($scope) {
+.controller('SettingCtrl', ['$scope', function(){
+
+}])
+
+.controller('AccountCtrl', function($scope, $window, Idea) {
+    $window.console.log(Idea.all());
     $scope.cards = [{
         id:1,
         title: 'Pretty Hate Machine',

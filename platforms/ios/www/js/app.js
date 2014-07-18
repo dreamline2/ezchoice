@@ -77,6 +77,28 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services'])
       }
     })
 
+    // setting
+    .state('tab.setting', {
+      url: '/setting',
+      views: {
+        'tab-setting': {
+          templateUrl: 'templates/tab-setting.html',
+          controller: 'SettingCtrl'
+        }
+      }
+    })
+
+    // slidebox
+    .state('tab.slidebox', {
+      url: '/slidebox',
+      views: {
+        'slidebox': {
+          templateUrl: 'templates/slidebox.html',
+          controller: 'SlideBoxCtrl'
+        }
+      }
+    })
+
   // if none of the above states are matched, use this as the fallback
   $urlRouterProvider.otherwise('/tab/dash');
 

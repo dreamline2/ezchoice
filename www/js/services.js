@@ -33,17 +33,29 @@ angular.module('starter.services', [])
       // this callback will be called asynchronously
       // when the response is available
       // $window.console.log(data+','+status+','+headers+','+config);
-      $window.console.log($window)
-      dataAll = data
+      $window.console.log(data)
+      alert('success'+data[0].name+','+data[1].name)
     };
   var errorCallback = function(data, status, headers, config){
       $window.console.log($window)
+      alert('error')
   };
   var data = {
     id: 'b5553f8dcedf9a1714aba4a7a9587411',
     secret_key: '42f4f8c9e60147aa3358f1346cca1f13'
   };
-  $http.post('http://api.ser.ideas.iii.org.tw/api/user/get_token', data).success(successCallback).error(errorCallback);
+  data = {size:1};
+
+  $http.get('http://ggsingleruler.appspot.com/api/food/fish/list?size=2').success(successCallback).error(errorCallback);
+
+
+  // $http({
+  //   method: 'GET',
+  //   url: 'http://ggsingleruler.appspot.com/api/food/fish/list?size=2',
+  //   data: {
+  //     size: 2
+  //   }
+  // }).success(successCallback).error(errorCallback);
 
   return {
     all: function(){
