@@ -1,0 +1,48 @@
+<ion-view class="pane">
+    <ion-slide-box on-slide-changed="slideHasChanged($index)">
+        <ion-slide>
+            <div class="slides record">
+                <h1>記錄</h1>
+                <p>留下你的足跡。</p>
+
+                <div class="row">
+                    <div class="col">
+                        <button class="button button-block button-positive">Block Button</button>
+                    </div>
+                </div>
+            </div>
+        </ion-slide>
+        <ion-slide>
+            <div class="slides recommend">
+                <h1>推薦</h1>
+                <p>更直覺推薦你的好去處。</p>
+            </div>
+        </ion-slide>
+        <ion-slide>
+            <div class="slides community">
+
+                <h1>社群</h1>
+                <p>看看大家都去哪裡。</p>
+
+
+                <div class="row">
+                    <div class="col">
+                        <button class="button button-block button-positive">Block Button</button>
+                    </div>
+                </div>
+
+            </div>
+        </ion-slide>
+        <ion-slide>
+            <div class="slide pink">
+                <h1>Ezchoice</h1>
+                <p>幫助你輕鬆找到好去處。</p>
+                <div class="row">
+                    <div class="col">
+                        <button class="button button-block button-positive" ng-click="startApp()">登入馬上使用</button>
+                    </div>
+                </div>
+            </div>
+        </ion-slide>
+    </ion-slide-box>
+</ion-view>

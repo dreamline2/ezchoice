@@ -1,0 +1,36 @@
+/* Empty. Add your own CSS if you like */
+/* line 7, ../sass/main.scss */
+.pane {
+  background-color: #ff0000;
+}
+
+/* line 10, ../sass/main.scss */
+.slider {
+  height: 100%;
+}
+
+/* line 13, ../sass/main.scss */
+.record {
+  background: red url("../img/record.jpg");
+  background-size: auto 100%;
+  background-position: center;
+}
+
+/* line 18, ../sass/main.scss */
+.recommend {
+  background: red url("../img/recommand.jpg");
+  background-size: auto 100%;
+  background-position: center;
+}
+
+/* line 23, ../sass/main.scss */
+.community {
+  background: red url("../img/spcial.jpg");
+  background-size: auto 100%;
+  background-position: center;
+}
+
+/* line 28, ../sass/main.scss */
+.slides {
+  height: 100%;
+}

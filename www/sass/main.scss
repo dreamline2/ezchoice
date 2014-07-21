@@ -1,0 +1,30 @@
+
+$slide-box-image1: '../img/recommand.jpg';
+$slide-box-image2: '../img/record.jpg';
+$slide-box-image3: '../img/spcial.jpg';
+
+/* Empty. Add your own CSS if you like */
+.pane{
+    background-color: #ff0000;
+}
+.slider {
+    height: 100%;
+}
+.record {
+    background: #ff0000 url($slide-box-image2);
+    background-size: auto 100%;
+    background-position: center;
+}
+.recommend {
+    background: #ff0000 url($slide-box-image1);
+    background-size: auto 100%;
+    background-position: center;
+}
+.community {
+    background: #ff0000 url($slide-box-image3);
+    background-size: auto 100%;
+    background-position: center;
+}
+.slides {
+    height: 100%;
+}
