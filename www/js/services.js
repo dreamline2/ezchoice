@@ -34,7 +34,7 @@ angular.module('starter.services', [])
       // when the response is available
       // $window.console.log(data+','+status+','+headers+','+config);
       $window.console.log(data)
-      alert('success'+data[0].name+','+data[1].name)
+      // alert('success'+data[0].name+','+data[1].name)
     };
   var errorCallback = function(data, status, headers, config){
       $window.console.log($window)

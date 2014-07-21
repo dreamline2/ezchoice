@@ -78,6 +78,17 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services'])
     })
 
     // setting
+    .state('tab.camera', {
+      url: '/camera',
+      views: {
+        'tab-camera': {
+          templateUrl: 'templates/tab-camera.html',
+          controller: 'CameraCtrl'
+        }
+      }
+    })
+
+    // setting
     .state('tab.setting', {
       url: '/setting',
       views: {
@@ -88,10 +99,11 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services'])
       }
     })
 
-    // slidebox
-    .state('slidebox', {
+    // intro
+    .state('intro', {
       url: '/',
-      templateUrl: 'templates/slidebox.html',
+      templateUrl: 'templates/intro.html',
+      controller: 'IntroCtrl'
     })
 
   // if none of the above states are matched, use this as the fallback

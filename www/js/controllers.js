@@ -1,6 +1,17 @@
 angular.module('starter.controllers', [])
 
 .controller('DashCtrl', function($scope) {
+  var onShake = function (e) {
+    // Code fired when a shake is detected
+    alert(e+', shake it')
+  };
+
+  // Start watching for shake gestures and call "onShake"
+  // alert('進入app')
+  shake.startWatch(onShake);
+
+  // Stop watching for shake gestures
+  // shake.stopWatch();
 })
 
 .controller('FriendsCtrl', function($scope, Friends) {
@@ -43,7 +54,7 @@ angular.module('starter.controllers', [])
 
   // Called to navigate to the main app
   $scope.startApp = function() {
-    $state.go('main');
+    $state.go('tab.friends');
   };
   $scope.next = function() {
     $ionicSlideBoxDelegate.next();
