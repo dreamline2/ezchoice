@@ -1,27 +1,34 @@
-<ion-view title="Friends">
-  <ion-content class="has-header">
-        <!--  search bar  -->
-        <div class="bar bar-header item-input-inset">
-            <label class="item-input-wrapper">
-                <i class="icon ion-ios7-search placeholder-icon"></i>
-                <input type="search" placeholder="Search">
-            </label>
-            <button class="button button-clear">
-                Cancel
-            </button>
-        </div>
+<ion-view title="探索最佳" left-buttons="leftButtons">
+    <ion-content class="has-header">
 
         <!--  search  -->
-        <div class="list list-inset">
+        <div class="list list-inset" style="background:#ff0000;">
             <label class="item item-input">
                 <i class="icon ion-search placeholder-icon"></i>
                 <input type="text" placeholder="Search">
             </label>
         </div>
-    <ion-list>
-      <ion-item ng-repeat="friend in friends" type="item-text-wrap" href="#/tab/friend/{{friend.id}}">
-        {{friend.name}}
-      </ion-item>
-    </ion-list>
-  </ion-content>
+
+
+
+        <div class="row" ng-repeat="friend in friends">
+            <div class="col col-33">
+                <img class="ite" src="http://photos-e.ak.instagram.com/hphotos-ak-xfp1/10533337_621326867964996_832962868_n.jpg" alt="">
+            </div>
+            <div class="col col-33">
+                <img class="ite" src="http://photos-e.ak.instagram.com/hphotos-ak-xfp1/10533337_621326867964996_832962868_n.jpg" alt="">
+            </div>
+            <div class="col col-33">
+                <img class="ite" src="http://photos-e.ak.instagram.com/hphotos-ak-xfp1/10533337_621326867964996_832962868_n.jpg" alt="">
+            </div>
+        </div>
+
+
+
+        <ion-list>
+            <ion-item ng-repeat="friend in friends" type="item-text-wrap" href="#/main/tab/friend/{{friend.id}}">
+                {{friend.name}}
+            </ion-item>
+        </ion-list>
+    </ion-content>
 </ion-view>

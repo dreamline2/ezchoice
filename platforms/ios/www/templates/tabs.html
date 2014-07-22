@@ -5,11 +5,14 @@
 </ion-header-bar> -->
 
 
-  <ion-nav-bar class="bar-energized nav-title-slide-ios7">
-      <ion-nav-back-button class="button-icon icon  ion-ios7-arrow-back">
-      Back
+<ion-nav-bar class="bar-energized nav-title-slide-ios7">
+  <ion-nav-buttons side="left">
+    <button menu-toggle="left" class="button button-icon icon ion-navicon"></button>
+  </ion-nav-buttons>
+    <ion-nav-back-button class="button-icon icon  ion-ios7-arrow-back">
+        Back
     </ion-nav-back-button>
-  </ion-nav-bar>
+</ion-nav-bar>
 
 
 <!--
@@ -19,22 +22,25 @@
 -->
 <ion-tabs class="tabs-icon-only">
 
-  <!-- Adopt Tab -->
-  <ion-tab icon="icon ion-person-stalker" href="#/tab/friends">
-    <ion-nav-view name="tab-friends"></ion-nav-view>
-  </ion-tab>
+    <!-- Adopt Tab -->
+    <ion-tab icon="icon ion-person-stalker" href="#/main/tab/friends">
+        <ion-nav-view name="tab-friends"></ion-nav-view>
+    </ion-tab>
 
-  <!-- About Tab -->
-  <ion-tab icon="icon ion-person" href="#/tab/account">
-    <ion-nav-view name="tab-account"></ion-nav-view>
-  </ion-tab>
+    <!-- About Tab -->
+    <ion-tab icon="icon ion-person" href="#/main/tab/account">
+        <ion-nav-view name="tab-account"></ion-nav-view>
+    </ion-tab>
 
+    <!-- setting Tab -->
+    <ion-tab icon="icon ion-gear-b" href="#/main/tab/setting">
+        <ion-nav-view name="tab-setting"></ion-nav-view>
+    </ion-tab>
 
-
-  <!-- setting Tab -->
-  <ion-tab icon="icon ion-gear-b" href="#/tab/setting">
-    <ion-nav-view name="tab-setting"></ion-nav-view>
-  </ion-tab>
+        <!-- setting Tab -->
+    <ion-tab icon="icon ion-gear-b" href="#/main/tab/shake">
+        <ion-nav-view name="tab-shake"></ion-nav-view>
+    </ion-tab>
 
 
 </ion-tabs>

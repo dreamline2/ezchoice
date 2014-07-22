@@ -30,15 +30,25 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services'])
   $stateProvider
 
     // setup an abstract state for the tabs directive
-    .state('tab', {
+    .state('main', {
+      url: "/main",
+      abstract: true,
+      templateUrl: "templates/menu.html"
+    })
+
+    .state('main.tab', {
       url: "/tab",
       abstract: true,
-      templateUrl: "templates/tabs.html"
+      views:{
+        'menu-content': {
+          templateUrl: "templates/tabs.html"
+        }
+      }
     })
 
     // Each tab has its own nav history stack:
 
-    .state('tab.dash', {
+    .state('main.tab.dash', {
       url: '/dash',
       views: {
         'tab-dash': {
@@ -48,7 +58,7 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services'])
       }
     })
 
-    .state('tab.friends', {
+    .state('main.tab.friends', {
       url: '/friends',
       views: {
         'tab-friends': {
@@ -57,7 +67,7 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services'])
         }
       }
     })
-    .state('tab.friend-detail', {
+    .state('main.tab.friend-detail', {
       url: '/friend/:friendId',
       views: {
         'tab-friends': {
@@ -67,7 +77,7 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services'])
       }
     })
 
-    .state('tab.account', {
+    .state('main.tab.account', {
       url: '/account',
       views: {
         'tab-account': {
@@ -78,7 +88,7 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services'])
     })
 
     // setting
-    .state('tab.camera', {
+    .state('main.tab.camera', {
       url: '/camera',
       views: {
         'tab-camera': {
@@ -89,12 +99,34 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services'])
     })
 
     // setting
-    .state('tab.setting', {
+    .state('main.tab.setting', {
       url: '/setting',
       views: {
         'tab-setting': {
           templateUrl: 'templates/tab-setting.html',
           controller: 'SettingCtrl'
+        }
+      }
+    })
+
+    // shake
+    .state('main.tab.shake', {
+      url: '/shake',
+      views: {
+        'tab-shake': {
+          templateUrl: 'templates/tab-shake.html',
+          controller: 'ShakeCtrl'
+        }
+      }
+    })
+
+    // Recommend
+    .state('main.tab.recommend', {
+      url: '/recommend',
+      views: {
+        'tab-recommend': {
+          templateUrl: 'templates/tab-recommend.html',
+          controller: 'ecommendCtrl'
         }
       }
     })

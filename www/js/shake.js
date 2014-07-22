@@ -1,4 +1,5 @@
 
+module.exports = (function () {
     "use strict";
     var shake = {},
         watchId = null,
@@ -60,4 +61,5 @@
     function handleError() {
     }
 
-
+    return shake;
+})();

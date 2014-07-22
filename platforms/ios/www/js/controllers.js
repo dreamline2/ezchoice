@@ -28,8 +28,7 @@ angular.module('starter.controllers', [])
   }
 })
 
-.controller('SettingCtrl', ['$scope', function(){
-
+.controller('ShakeCtrl', ['$scope', function(){
 }])
 
 .controller('AccountCtrl', function($scope, $window, Idea) {
@@ -54,7 +53,7 @@ angular.module('starter.controllers', [])
 
   // Called to navigate to the main app
   $scope.startApp = function() {
-    $state.go('tab.friends');
+    $state.go('main.tab.friends');
   };
   $scope.next = function() {
     $ionicSlideBoxDelegate.next();
@@ -66,6 +65,12 @@ angular.module('starter.controllers', [])
   // Called each time the slide changes
   $scope.slideChanged = function(index) {
     $scope.slideIndex = index;
+  };
+})
+
+.controller('MainCtrl', function($scope, $ionicSideMenuDelegate) {
+  $scope.toggleLeftSideMenu = function() {
+    $ionicSideMenuDelegate.toggleLeft();
   };
 })
 
