@@ -16,6 +16,16 @@ angular.module('starter.controllers', [])
 
 .controller('FriendsCtrl', function($scope, Friends) {
   $scope.friends = Friends.all();
+  $scope.data = (function(){
+    var data = [];
+    var Things = {};
+    Things.length = 21;
+    for (var i = Things.length - 1; i >= 0; i--) {
+      data.push(i)
+    };
+    console.log(data)
+    return data
+  }())
 })
 
 .controller('FriendDetailCtrl', function($scope, $stateParams, Friends) {
@@ -29,6 +39,8 @@ angular.module('starter.controllers', [])
 })
 
 .controller('ShakeCtrl', ['$scope', function(){
+}])
+.controller('ShakeDetailCtrl', ['$scope', function(){
 }])
 
 .controller('AccountCtrl', function($scope, $window, Idea) {

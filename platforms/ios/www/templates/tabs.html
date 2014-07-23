@@ -6,9 +6,9 @@
 
 
 <ion-nav-bar class="bar-energized nav-title-slide-ios7">
-  <ion-nav-buttons side="left">
-    <button menu-toggle="left" class="button button-icon icon ion-navicon"></button>
-  </ion-nav-buttons>
+    <ion-nav-buttons side="left">
+        <button menu-toggle="left" class="button button-icon icon ion-navicon" ng-if="true"></button>
+    </ion-nav-buttons>
     <ion-nav-back-button class="button-icon icon  ion-ios7-arrow-back">
         Back
     </ion-nav-back-button>
@@ -20,26 +20,20 @@
   Each tab's child <ion-nav-view> directive will have its own
   navigation history that also transitions its views in and out.
 -->
-<ion-tabs class="tabs-icon-only">
+<ion-tabs class="tabs-icon-only tabs-stable">
 
     <!-- Adopt Tab -->
-    <ion-tab icon="icon ion-person-stalker" href="#/main/tab/friends">
+    <ion-tab icon="icon ion-fireball" href="#/main/tab/friends">
         <ion-nav-view name="tab-friends"></ion-nav-view>
+    </ion-tab>
+    <!-- setting Tab -->
+    <ion-tab icon="icon ion-ios7-star" href="#/main/tab/shake">
+        <ion-nav-view name="tab-shake"></ion-nav-view>
     </ion-tab>
 
     <!-- About Tab -->
-    <ion-tab icon="icon ion-person" href="#/main/tab/account">
+    <ion-tab icon="icon ion-leaf" href="#/main/tab/account">
         <ion-nav-view name="tab-account"></ion-nav-view>
-    </ion-tab>
-
-    <!-- setting Tab -->
-    <ion-tab icon="icon ion-gear-b" href="#/main/tab/setting">
-        <ion-nav-view name="tab-setting"></ion-nav-view>
-    </ion-tab>
-
-        <!-- setting Tab -->
-    <ion-tab icon="icon ion-gear-b" href="#/main/tab/shake">
-        <ion-nav-view name="tab-shake"></ion-nav-view>
     </ion-tab>
 
 

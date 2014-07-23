@@ -9,26 +9,12 @@
             </label>
         </div>
 
-
-
-        <div class="row" ng-repeat="friend in friends">
-            <div class="col col-33">
-                <img class="ite" src="http://photos-e.ak.instagram.com/hphotos-ak-xfp1/10533337_621326867964996_832962868_n.jpg" alt="">
-            </div>
-            <div class="col col-33">
-                <img class="ite" src="http://photos-e.ak.instagram.com/hphotos-ak-xfp1/10533337_621326867964996_832962868_n.jpg" alt="">
-            </div>
-            <div class="col col-33">
-                <img class="ite" src="http://photos-e.ak.instagram.com/hphotos-ak-xfp1/10533337_621326867964996_832962868_n.jpg" alt="">
-            </div>
+        <div class="container">
+            <a class="unit-33" ng-repeat="friend in friends" href="#/main/tab/friend/{{friend.id}}">
+                <!-- <div class="mask"><div class="ion-icon ion-heart" data-pack="default" data-tags="love"></div></div> -->
+                <img src="http://photos-e.ak.instagram.com/hphotos-ak-xfp1/10533337_621326867964996_832962868_n.jpg" alt="">
+            </a>
         </div>
 
-
-
-        <ion-list>
-            <ion-item ng-repeat="friend in friends" type="item-text-wrap" href="#/main/tab/friend/{{friend.id}}">
-                {{friend.name}}
-            </ion-item>
-        </ion-list>
     </ion-content>
 </ion-view>

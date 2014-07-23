@@ -120,6 +120,17 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services'])
       }
     })
 
+    // shake detail
+    .state('main.tab.shake-option', {
+      url: '/tab-shake-option',
+      views: {
+        'tab-shake-option': {
+          templateUrl: 'templates/tab-shake-option.html',
+          controller: 'ShakeDetailCtrl'
+        }
+      }
+    })
+
     // Recommend
     .state('main.tab.recommend', {
       url: '/recommend',

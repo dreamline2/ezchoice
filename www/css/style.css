@@ -13,21 +13,21 @@
 /* line 13, ../sass/main.scss */
 
 .record {
-    background: red url("../img/record.jpg");
+    background: url("http://www.gratisography.com/pictures/62H.jpg");
     background-size: auto 100%;
     background-position: center;
 }
 /* line 18, ../sass/main.scss */
 
 .recommend {
-    background: red url("../img/recommand.jpg");
+    background: url("http://www.gratisography.com/pictures/111H.jpg");
     background-size: auto 100%;
-    background-position: center;
+    background-position: 10%;
 }
 /* line 23, ../sass/main.scss */
 
 .community {
-    background: red url("../img/spcial.jpg");
+    background: url("../img/spcial.jpg");
     background-size: auto 100%;
     background-position: center;
 }
@@ -36,6 +36,40 @@
 .slides {
     height: 100%;
 }
+
+.wraper {
+    position: relative;
+}
+.wrap {
+    /*background-color:  rgba(250, 191, 41, 0.3);*/
+    /*background-color: rgba(0, 0, 0, 0.2);*/
+    margin: 8em 0.8em 2em .8em;
+    padding: 2em;
+}
+.ion-icon-intro {
+    position: relative;
+    z-index: 0;
+    margin: 0 auto;
+    border-radius: 4px;
+    list-style: none;
+    text-align: center;
+    font-weight: normal;
+    font-size: 60px;
+    margin: 2.8em auto;
+    color: #ffffff;
+}
+.slides h1 {
+    margin: 2em 0 0 0;
+    color: #ffffff;
+    text-align: center;
+}
+.wrap p {
+    color: #ffffff;
+    text-align: center;
+    font-size: 1.2em;
+    line-height: 2em;
+}
+
 .row {
     /*padding: 0px;*/
 }
@@ -45,10 +79,52 @@
 .ite {
     width: 100%;
 }
-/* 搖一搖 */
 
+
+/* menu */
+.list {
+    background-color: #000000;
+}
+
+/* index */
+
+.index {
+    background: url("http://bit.ly/1epg5F7");
+    background-size: auto 105%;
+    background-position: center;
+}
+
+/* 搖一搖 */
+.container {
+    margin: -1px;
+}
+.container:after {
+    content: '';
+    display: block;
+    clear: both
+}
 .unit {
     position: relative;
+    width: 50%;
+    height: 160px;
+    padding: 1px;
+    float: left;
+}
+
+.unit img {
+    width: 100%;
+    height: 100%;
+}
+.unit-33 {
+    position: relative;
+    width: 33.3333%;
+    height: 110px;
+    padding: 1px;
+    float: left;
+}
+.unit-33 img {
+    width: 100%;
+    height: 100%;
 }
 .ion-icon {
     position: relative;
@@ -65,19 +141,35 @@
 .mask {
     position: absolute;
     width: 100%;
-    height: 97%;
+    height: 100%;
     background-color: rgba(0, 0, 0, 0.5);
 }
-.mask{
-    max-width:500px;
-    height:100%;
-    margin:0 auto;
+
+
+/* shake */
+.row-photo {
+    padding:0px;
+    width:100%;
+    height:125px;
+    display: block;
 }
-.mask:before{
-    content: '';
-    display: inline-block;
-    width: 0;
-    height: 100%;
-    vertical-align: middle;
-    margin-left: -0.25em;
+.recommend_1 {
+    background: url("http://www.gratisography.com/pictures/62H.jpg");
+    background-size:  100% auto;
+    background-position: center;
+}
+.recommend_2 {
+    background: url("http://bit.ly/1epgw26");
+    background-size:  100% auto;
+    background-position: center;
+}
+.recommend_3 {
+    background: url("http://www.gratisography.com/pictures/38H.jpg");
+    background-size:  100% auto;
+    background-position: center;
+}
+.recommend_4 {
+    background: url("http://bit.ly/1cHletb");
+    background-size:  100% auto;
+    background-position: center;
 }
