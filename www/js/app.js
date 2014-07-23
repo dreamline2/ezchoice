@@ -18,6 +18,11 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services'])
       // org.apache.cordova.statusbar required
       StatusBar.styleDefault();
     }
+
+    // Defaults to sessionStorage for storing the Facebook token
+    openFB.init({
+        appId: '331977093624693'
+    });
   });
 })
 
@@ -126,6 +131,17 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services'])
       views: {
         'tab-shake': {
           templateUrl: 'templates/tab-shake-option.html',
+          controller: 'ShakeOptionCtrl'
+        }
+      }
+    })
+
+    // shake detail
+    .state('main.tab.shake-detail', {
+      url: '/shakes/detail',
+      views: {
+        'tab-shake': {
+          templateUrl: 'templates/tab-shake-detail.html',
           controller: 'ShakeDetailCtrl'
         }
       }
@@ -147,6 +163,12 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services'])
       url: '/',
       templateUrl: 'templates/intro.html',
       controller: 'IntroCtrl'
+    })
+
+    // intro
+    .state('oauthcallback', {
+      url: '/oauthcallback',
+      templateUrl: 'templates/oauthcallback.html'
     })
 
   // if none of the above states are matched, use this as the fallback

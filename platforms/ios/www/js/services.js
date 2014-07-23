@@ -28,10 +28,10 @@ angular.module('starter.services', [])
 
 .factory('shakeMenu', [function () {
   var menu = [
-    { id: 1, name: '平價美食' },
-    { id: 2, name: '閒聊簡餐' },
-    { id: 3, name: '高檔美食' },
-    { id: 4, name: '優質空間' }
+    { id: 0, name: '平價美食' },
+    { id: 1, name: '閒聊簡餐' },
+    { id: 2, name: '高檔美食' },
+    { id: 3, name: '優質空間' }
   ];
 
   return {
@@ -61,6 +61,33 @@ angular.module('starter.services', [])
       return q.promise;
     }
   }
+}])
+
+
+.factory('Explore', ['$http', function($http){
+
+  var ExploreData = {};
+
+  var successCallback = function(data, status, headers, config) {
+      // this callback will be called asynchronously
+      // when the response is available
+      ExploreData = data;
+      console.log(data)
+    };
+
+  var errorCallback = function(data, status, headers, config){
+      console.log(data)
+      alert('error')
+  };
+
+
+  return {
+    all: function() {
+      $http.get('http://ezselector.appspot.com/explore?latlng=(25,121)&tags=[%22foods%22]&size=6').success(successCallback).error(errorCallback);
+      console.log(ExploreData)
+      return ExploreData
+    }
+  };
 }])
 
 
@@ -103,3 +130,5 @@ angular.module('starter.services', [])
   }
 
 });
+
+

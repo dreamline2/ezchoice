@@ -1,7 +1,7 @@
 <ion-view title="推薦好去處">
     <ion-content class="has-header">
         <div class="container">
-            <a class="row-photo recommend_{{m.id}}" ng-repeat="m in menu" href="#/main/tab/shakes/{{m.id}}">
+            <a class="row-photo recommend_{{m.id + 1}}" ng-repeat="m in menu" href="#/main/tab/shakes/{{m.id}}">
                 <div class="mask-2"></div>
                 <div class="slogan">{{m.name}}</div>
             </a>

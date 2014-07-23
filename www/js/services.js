@@ -64,6 +64,33 @@ angular.module('starter.services', [])
 }])
 
 
+.factory('Explore', ['$http', function($http){
+
+  var ExploreData = {};
+
+  var successCallback = function(data, status, headers, config) {
+      // this callback will be called asynchronously
+      // when the response is available
+      ExploreData = data;
+      console.log(data)
+    };
+
+  var errorCallback = function(data, status, headers, config){
+      console.log(data)
+      alert('error')
+  };
+
+
+  return {
+    all: function() {
+      $http.get('http://ezselector.appspot.com/explore?latlng=(25,121)&tags=[%22foods%22]&size=6').success(successCallback).error(errorCallback);
+      console.log(ExploreData)
+      return ExploreData
+    }
+  };
+}])
+
+
 .factory('Idea', function($http, $window) {
   // $window.APP = $window.APP || {};
   var dataAll = {'a':'123'};
@@ -103,3 +130,5 @@ angular.module('starter.services', [])
   }
 
 });
+
+
