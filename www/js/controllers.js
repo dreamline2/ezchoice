@@ -137,32 +137,32 @@ angular.module('starter.controllers', [])
 
     // Called to navigate to the main app
     $scope.fblogin = function() {
-        // openFB.login(function(response) {
-        //   console.log(response)
-        //         if (response.status === 'connected') {
-        //             alert('Facebook login succeeded, got access token: ' + response.authResponse.token);
+        openFB.login(function(response) {
+          console.log(response)
+                if (response.status === 'connected') {
+                    alert('Facebook login succeeded, got access token: ' + response.authResponse.token);
 
 
-        //             openFB.api({
-        //                 path: '/me',
-        //                 success: function(data) {
-        //                     console.log(JSON.stringify(data));
-        //                     // document.getElementById("userName").innerHTML = data.name;
-        //                     // document.getElementById("userPic").src = 'http://graph.facebook.com/' + data.id + '/picture?type=small';
-        //                     $state.go('main.tab.friends');
-        //                 },
-        //                 error: function(data) {
-        //                     console.log(data)
-        //                 }
-        //             });
-        //         } else {
-        //             alert('Facebook login failed: ' + response.error);
-        //         }
-        //     }, {
-        //         scope: 'email,read_stream,publish_stream'
-        //     });
+                    openFB.api({
+                        path: '/me',
+                        success: function(data) {
+                            console.log(JSON.stringify(data));
+                            // document.getElementById("userName").innerHTML = data.name;
+                            // document.getElementById("userPic").src = 'http://graph.facebook.com/' + data.id + '/picture?type=small';
+                            $state.go('main.tab.friends');
+                        },
+                        error: function(data) {
+                            console.log(data)
+                        }
+                    });
+                } else {
+                    alert('Facebook login failed: ' + response.error);
+                }
+            }, {
+                scope: 'email,read_stream,publish_stream'
+            });
 
-        $state.go('main.tab.friends');
+        // $state.go('main.tab.friends');
     };
 
     $scope.next = function() {
