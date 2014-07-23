@@ -38,9 +38,72 @@ angular.module('starter.controllers', [])
   }
 })
 
-.controller('ShakeCtrl', ['$scope', function(){
+.controller('ShakeCtrl', ['$scope','shakeMenu', function($scope, shakeMenu){
+  $scope.menu = shakeMenu.all();
 }])
-.controller('ShakeDetailCtrl', ['$scope', function(){
+
+
+
+.controller('ShakeDetailCtrl', ['$scope', '$stateParams', '$ionicPlatform', 'shakeMenu', 'Camera', function($scope, $stateParams, $ionicPlatform, shakeMenu, Camera){
+  $ionicPlatform.ready(function() {
+    // Platform stuff here.
+    // Start watching for shake gestures and call "onShake"
+
+    // Wait for Cordova to load
+    //
+
+    // Cordova is ready
+    //
+        navigator.geolocation.getCurrentPosition(onSuccess, onError);
+
+
+    // onSuccess Geolocation
+    //
+    function onSuccess(position) {
+        var element = document.getElementById('geolocation');
+        element.innerHTML = 'Latitude: '           + position.coords.latitude              + '<br />' +
+                            'Longitude: '          + position.coords.longitude             + '<br />' +
+                            'Altitude: '           + position.coords.altitude              + '<br />' +
+                            'Accuracy: '           + position.coords.accuracy              + '<br />' +
+                            'Altitude Accuracy: '  + position.coords.altitudeAccuracy      + '<br />' +
+                            'Heading: '            + position.coords.heading               + '<br />' +
+                            'Speed: '              + position.coords.speed                 + '<br />' +
+                            'Timestamp: '          +                                   position.timestamp          + '<br />';
+    }
+
+    // onError Callback receives a PositionError object
+    //
+    function onError(error) {
+        alert('code: '    + error.code    + '\n' +
+                'message: ' + error.message + '\n');
+    }
+
+    shake.startWatch(onShake);
+  });
+
+
+  $scope.menu = shakeMenu.get($stateParams.menuId);
+  $scope.getPhoto = function() {
+    Camera.getPicture().then(function(imageURI) {
+      console.log(imageURI);
+      $scope.lastPhoto = imageURI;
+    }, function(err) {
+      console.err(err);
+    }, {
+      quality: 100,
+      // targetWidth: 320,
+      // targetHeight: 320,
+      saveToPhotoAlbum: true
+    });
+  };
+    var onShake = function () {
+      // Code fired when a shake is detected
+      console.log('搖')
+      alert('快搖')
+    };
+
+
+
 }])
 
 .controller('AccountCtrl', function($scope, $window, Idea) {
@@ -77,12 +140,6 @@ angular.module('starter.controllers', [])
   // Called each time the slide changes
   $scope.slideChanged = function(index) {
     $scope.slideIndex = index;
-  };
-})
-
-.controller('MainCtrl', function($scope, $ionicSideMenuDelegate) {
-  $scope.toggleLeftSideMenu = function() {
-    $ionicSideMenuDelegate.toggleLeft();
   };
 })
 

@@ -1,17 +1,6 @@
 angular.module('starter.controllers', [])
 
 .controller('DashCtrl', function($scope) {
-  var onShake = function (e) {
-    // Code fired when a shake is detected
-    alert(e+', shake it')
-  };
-
-  // Start watching for shake gestures and call "onShake"
-  // alert('進入app')
-  shake.startWatch(onShake);
-
-  // Stop watching for shake gestures
-  // shake.stopWatch();
 })
 
 .controller('FriendsCtrl', function($scope, Friends) {
@@ -32,19 +21,68 @@ angular.module('starter.controllers', [])
   $scope.friend = Friends.get($stateParams.friendId);
 })
 
-.controller('slideHasChanged', function($scope, $ionicSlideBoxDelegate) {
-  $scope.nextSlide = function() {
-    $ionicSlideBoxDelegate.next();
-  }
-})
-
-.controller('ShakeCtrl', ['$scope', function(){
-}])
-.controller('ShakeDetailCtrl', ['$scope', function(){
+.controller('ShakeCtrl', ['$scope','shakeMenu', function($scope, shakeMenu){
+  $scope.menu = shakeMenu.all();
 }])
 
-.controller('AccountCtrl', function($scope, $window, Idea) {
-    $window.console.log(Idea.all());
+.controller('ShakeDetailCtrl', ['$scope', '$stateParams', '$ionicPlatform', 'shakeMenu', 'Camera', function($scope, $stateParams, $ionicPlatform, shakeMenu, Camera){
+  $ionicPlatform.ready(function() {
+
+    navigator.geolocation.getCurrentPosition(onSuccess, onError);
+    // shake.startWatch(onShake);
+
+    function onSuccess(position) {
+        var element = document.getElementById('geolocation');
+        var a = 'Latitude: '           + position.coords.latitude              + '<br />' +
+                'Longitude: '          + position.coords.longitude             + '<br />' +
+                'Altitude: '           + position.coords.altitude              + '<br />' +
+                'Accuracy: '           + position.coords.accuracy              + '<br />' +
+                'Altitude Accuracy: '  + position.coords.altitudeAccuracy      + '<br />' +
+                'Heading: '            + position.coords.heading               + '<br />' +
+                'Speed: '              + position.coords.speed                 + '<br />' +
+                'Timestamp: '          +                                   position.timestamp          + '<br />';
+
+        alert(a)
+    }
+
+    function onError(error) {
+        alert('code: '    + error.code    + '\n' +
+                'message: ' + error.message + '\n');
+    }
+
+    function onShake() {
+      // Code fired when a shake is detected
+      console.log('搖')
+      alert('快搖')
+    };
+
+
+  });
+
+
+  $scope.menu = shakeMenu.get($stateParams.menuId);
+
+  $scope.getPhoto = function() {
+    Camera.getPicture().then(function(imageURI) {
+      console.log(imageURI);
+      $scope.lastPhoto = imageURI;
+    }, function(err) {
+      console.err(err);
+    }, {
+      quality: 100,
+      // targetWidth: 320,
+      // targetHeight: 320,
+      saveToPhotoAlbum: true
+    });
+  };
+
+
+
+
+}])
+
+.controller('AccountCtrl', function($scope, Idea) {
+    console.log(Idea.all());
     $scope.cards = [{
         id:1,
         title: 'Pretty Hate Machine',
@@ -67,6 +105,7 @@ angular.module('starter.controllers', [])
   $scope.startApp = function() {
     $state.go('main.tab.friends');
   };
+
   $scope.next = function() {
     $ionicSlideBoxDelegate.next();
   };
@@ -80,16 +119,3 @@ angular.module('starter.controllers', [])
   };
 })
 
-.controller('MainCtrl', function($scope, $ionicSideMenuDelegate) {
-  $scope.toggleLeftSideMenu = function() {
-    $ionicSideMenuDelegate.toggleLeft();
-  };
-})
-
-.controller('MainCtrl', function($scope, $state) {
-  console.log('MainCtrl');
-
-  $scope.toIntro = function(){
-    $state.go('intro');
-  }
-});

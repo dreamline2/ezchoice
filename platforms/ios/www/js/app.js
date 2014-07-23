@@ -122,9 +122,9 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services'])
 
     // shake detail
     .state('main.tab.shake-option', {
-      url: '/tab-shake-option',
+      url: '/shakes/:menuId',
       views: {
-        'tab-shake-option': {
+        'tab-shake': {
           templateUrl: 'templates/tab-shake-option.html',
           controller: 'ShakeDetailCtrl'
         }

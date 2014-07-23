@@ -3,6 +3,7 @@ angular.module('starter.services', [])
 /**
  * A simple example service that returns some data.
  */
+
 .factory('Friends', function() {
   // Might use a resource here that returns a JSON array
 
@@ -24,6 +25,26 @@ angular.module('starter.services', [])
     }
   }
 })
+
+.factory('shakeMenu', [function () {
+  var menu = [
+    { id: 0, name: '平價美食' },
+    { id: 1, name: '閒聊簡餐' },
+    { id: 2, name: '高檔美食' },
+    { id: 3, name: '優質空間' }
+  ];
+
+  return {
+    all: function() {
+      return menu
+    },
+    get: function(menuId) {
+      // Simple index lookup
+      return menu[menuId];
+    }
+  };
+}])
+
 .factory('Camera', ['$q', function($q) {
 
   return {
@@ -41,6 +62,8 @@ angular.module('starter.services', [])
     }
   }
 }])
+
+
 .factory('Idea', function($http, $window) {
   // $window.APP = $window.APP || {};
   var dataAll = {'a':'123'};
