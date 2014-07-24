@@ -1,6 +1,23 @@
 angular.module('starter.controllers', [])
 
 .controller('DashCtrl', function($scope) {})
+.controller('MenuCtrl', function($scope, $rootScope, FacebookInfo) {
+    // FacebookInfo.readInfo($scope.user, $scope, function(){
+    //     console.log($scope.user)
+    // });
+    // $scope.user = {name:'Wei'};
+    // $rootScope.sampleFunction = function( data ){
+
+    //     console.log(data);
+    //     // your logic
+
+    // };
+    $scope.user = FacebookInfo.user;
+    $scope.user.photo = FacebookInfo.photo;
+    console.log($scope.user)
+    console.log($scope.user.photo)
+    // console.log($rootScope.shareData)
+})
 
 .controller('FriendsCtrl', function($scope, Friends) {
     $scope.friends = Friends.all();
@@ -133,37 +150,98 @@ angular.module('starter.controllers', [])
 })
 
 
-.controller('IntroCtrl', function($scope, $state, $ionicSlideBoxDelegate) {
+.controller('IntroCtrl', function($rootScope, $scope, $state, $ionicSlideBoxDelegate, Facebook, FacebookInfo) {
+    // Here, usually you should watch for when Facebook is ready and loaded
+    $scope.$watch(function() {
+        return Facebook.isReady(); // This is for convenience, to notify if Facebook is loaded and ready to go.
+    }, function(newVal) {
+        $scope.facebookReady = true; // You might want to use this to disable/show/hide buttons and else
+    });
 
-    // Called to navigate to the main app
-    $scope.fblogin = function() {
-        // openFB.login(function(response) {
-        //   console.log(response)
-        //         if (response.status === 'connected') {
-        //             alert('Facebook login succeeded, got access token: ' + response.authResponse.token);
-
-
-        //             openFB.api({
-        //                 path: '/me',
-        //                 success: function(data) {
-        //                     console.log(JSON.stringify(data));
-        //                     // document.getElementById("userName").innerHTML = data.name;
-        //                     // document.getElementById("userPic").src = 'http://graph.facebook.com/' + data.id + '/picture?type=small';
-        //                     $state.go('main.tab.friends');
-        //                 },
-        //                 error: function(data) {
-        //                     console.log(data)
-        //                 }
-        //             });
-        //         } else {
-        //             alert('Facebook login failed: ' + response.error);
-        //         }
-        //     }, {
-        //         scope: 'email,read_stream,publish_stream'
-        //     });
-
-        $state.go('main.tab.friends');
+    $scope.loggedIn = false;
+    // From now on you can use the Facebook service just as Facebook api says
+    // Take into account that you will need $scope.$apply when inside a Facebook function's scope and not angular
+    $scope.login = function() {
+        Facebook.login(function(response) {
+            // Do something with response. Don't forget here you are on Facebook scope so use $scope.$apply
+            if (response.status == 'connected') {
+                $scope.logged = true;
+                $scope.me();
+                // $scope.photo();
+            }
+        });
     };
+
+    $scope.getLoginStatus = function() {
+        //
+        Facebook.getLoginStatus(function(response) {
+            console.log(response)
+            if (response.status == 'connected') {
+                $scope.$apply(function() {
+                    $scope.loggedIn = true;
+                });
+                $scope.me();
+            } else {
+                $scope.$apply(function() {
+                    $scope.loggedIn = false;
+                });
+            }
+        });
+    };
+
+    $scope.me = function() {
+        Facebook.api('/me', function(response) {
+            $scope.$apply(function() {
+                // Here you could re-check for user status (just in case)
+                // $scope.user = FacebookInfo.user;
+                FacebookInfo.user = response;
+                console.log(response)
+                $scope.photo();
+                // $state.go('main.tab.friends');
+            });
+        });
+    };
+
+    $scope.photo = function() {
+        Facebook.api('/me/picture', function(response) {
+            $scope.$apply(function() {
+                // Here you could re-check for user status (just in case)
+                // $scope.user = FacebookInfo.user;
+                console.log(response.data.url)
+                FacebookInfo.photo = response.data.url;
+                $state.go('main.tab.friends');
+            });
+        });
+    };
+    // Called to navigate to the main app
+    // $scope.fblogin = function() {
+    // openFB.login(function(response) {
+    //   console.log(response)
+    //         if (response.status === 'connected') {
+    //             alert('Facebook login succeeded, got access token: ' + response.authResponse.token);
+
+
+    //             openFB.api({
+    //                 path: '/me',
+    //                 success: function(data) {
+    //                     console.log(JSON.stringify(data));
+    //                     // document.getElementById("userName").innerHTML = data.name;
+    //                     // document.getElementById("userPic").src = 'http://graph.facebook.com/' + data.id + '/picture?type=small';
+    //                     $state.go('main.tab.friends');
+    //                 },
+    //                 error: function(data) {
+    //                     console.log(data)
+    //                 }
+    //             });
+    //         } else {
+    //             alert('Facebook login failed: ' + response.error);
+    //         }
+    //     }, {
+    //         scope: 'email,read_stream,publish_stream'
+    //     });
+
+    // $state.go('main.tab.friends');
+    // };
 
     $scope.next = function() {
         $ionicSlideBoxDelegate.next();

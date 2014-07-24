@@ -5,7 +5,7 @@
 // the 2nd parameter is an array of 'requires'
 // 'starter.services' is found in services.js
 // 'starter.controllers' is found in controllers.js
-angular.module('starter', ['ionic', 'starter.controllers', 'starter.services'])
+angular.module('starter', ['ionic', 'starter.controllers', 'starter.services', 'facebook'])
 
 .run(function($ionicPlatform) {
   $ionicPlatform.ready(function() {
@@ -19,26 +19,24 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services'])
       StatusBar.styleDefault();
     }
 
-    // Defaults to sessionStorage for storing the Facebook token
-    openFB.init({
-        appId: '331977093624693'
-    });
   });
 })
 
-.config(function($stateProvider, $urlRouterProvider) {
+.config(function($stateProvider, $urlRouterProvider, FacebookProvider) {
 
   // Ionic uses AngularUI Router which uses the concept of states
   // Learn more here: https://github.com/angular-ui/ui-router
   // Set up the various states which the app can be in.
   // Each state's controller can be found in controllers.js
+  FacebookProvider.init('331977093624693');
   $stateProvider
 
     // setup an abstract state for the tabs directive
     .state('main', {
       url: "/main",
       abstract: true,
-      templateUrl: "templates/menu.html"
+      templateUrl: "templates/menu.html",
+      controller: 'MenuCtrl'
     })
 
     .state('main.tab', {
@@ -165,11 +163,6 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services'])
       controller: 'IntroCtrl'
     })
 
-    // intro
-    .state('oauthcallback', {
-      url: '/oauthcallback',
-      templateUrl: 'templates/oauthcallback.html'
-    })
 
   // if none of the above states are matched, use this as the fallback
   $urlRouterProvider.otherwise('/');

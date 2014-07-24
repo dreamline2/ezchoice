@@ -1,7 +1,22 @@
 {
-  "name": "HelloIonic",
-  "private": "true",
+  "name": "demo",
+  "private": true,
   "devDependencies": {
     "ionic": "driftyco/ionic-bower#1.0.0-beta.9"
-  }
+  },
+  "version": "0.0.0",
+  "homepage": "https://github.com/dreamline2/ezchoice",
+  "authors": [
+    "wilson <wilson20120311@gmail.com>"
+  ],
+  "description": "demo",
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "www/lib",
+    "test",
+    "tests"
+  ]
 }

@@ -90,6 +90,16 @@ angular.module('starter.services', [])
   };
 }])
 
+.factory('FacebookInfo', function(){
+
+  var FacebookInfo = {
+    user: {'name': '訪客'},
+    photo: 'http://board.ek21.com/images/mood1/m1.gif'
+  };
+
+  return FacebookInfo
+})
+
 
 .factory('Idea', function($http, $window) {
   // $window.APP = $window.APP || {};
