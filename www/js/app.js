@@ -169,9 +169,30 @@ angular.module('starter', ['ionic', 'starter.services', 'starter.controllers', '
 
     // intro
     .state('intro', {
-      url: '/',
+      url: '/intro',
       templateUrl: 'templates/intro.html',
       controller: 'IntroCtrl'
+    })
+
+    // first
+    .state('first', {
+      url: '/',
+      templateUrl: 'templates/first.html',
+      controller: 'FirstCtrl'
+    })
+
+        // login
+    .state('login', {
+      url: '/login',
+      templateUrl: 'templates/login.html',
+      controller: 'LoginCtrl'
+    })
+
+        // register
+    .state('register', {
+      url: '/register',
+      templateUrl: 'templates/register.html',
+      controller: 'RegisterCtrl'
     })
 
 

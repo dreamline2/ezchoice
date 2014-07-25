@@ -1,6 +1,27 @@
 angular.module('starter.controllers', [])
 
 .controller('DashCtrl', function($scope) {})
+.controller('FirstCtrl', function($scope, $state) {
+    $scope.goIntro = function(){
+        $state.go('intro');
+    }
+})
+
+.controller('LoginCtrl', function($scope, $state, $ionicModal) {
+    // Create the login modal that we will use later
+  $scope.closeLogin = function() {
+    $scope.modal.hide();
+  }
+})
+
+.controller('RegisterCtrl', function($scope, $state, $ionicModal) {
+    // Create the login modal that we will use later
+  $scope.closeRegister = function() {
+    $scope.modal.hide();
+  }
+})
+
+
 .controller('MenuCtrl', function($scope, $rootScope, FacebookInfo) {
     // FacebookInfo.readInfo($scope.user, $scope, function(){
     //     console.log($scope.user)
@@ -20,7 +41,7 @@ angular.module('starter.controllers', [])
 })
 
 
-.controller('TabsCtrl', function($scope, $state, TakePicture, $ionicNavBarDelegate) {
+.controller('TabsCtrl', function($scope, $state, TakePicture, $ionicNavBarDelegate, Camera) {
 
     $scope.getPhoto = function() {
         console.log('Getting camera');
@@ -54,16 +75,28 @@ angular.module('starter.controllers', [])
 })
 
 .controller('FriendsCtrl', function($scope, $http, Friends, Explore) {
+    // function init(Explore){
 
+    // var data = {
+    //     latlng: '(25,121)',
+    //     tags: '[%22foods%22]',
+    //     size: 60
+    // };
+    // var str = '';
+    // for (var i = Things.length - 1; i >= 0; i--) {
+    //     str +=
+    // };
 
-    $http.get('http://ezselector.appspot.com/explore?latlng=(25,121)&tags=[%22foods%22]&size=60').then(function(res){
+    // Explore(latlng=latlng, tags=tags, function(resp){console.log('!!!!!'+JSON.stringify(resp.data))})
+     $http.get('http://ezselector.appspot.com/explore?latlng=(25,121)&tags=[%22foods%22]&size=60').then(function(res){
         $scope.friends = res.data;
         console.log(res)
         Explore.data = res.data;
 
     });
+// }
 
-
+    // getExport(Explore)
     // $scope.friends = $http.get('http://ezselector.appspot.com/explore?latlng=(25,121)&tags=[%22foods%22]&size=6').success(successCallback).error(errorCallback);;
 
     // var successCallback = function(data){
@@ -215,18 +248,54 @@ angular.module('starter.controllers', [])
 })
 
 
-.controller('IntroCtrl', function($rootScope, $scope, $state, $ionicSlideBoxDelegate, Facebook, FacebookInfo) {
+.controller('IntroCtrl', function($rootScope, $scope, $state, $ionicSlideBoxDelegate, $ionicModal, Facebook, FacebookInfo) {
     // Here, usually you should watch for when Facebook is ready and loaded
-    $scope.$watch(function() {
-        return Facebook.isReady(); // This is for convenience, to notify if Facebook is loaded and ready to go.
-    }, function(newVal) {
-        $scope.facebookReady = true; // You might want to use this to disable/show/hide buttons and else
+    // $scope.$watch(function() {
+    //     return Facebook.isReady(); // This is for convenience, to notify if Facebook is loaded and ready to go.
+    // }, function(newVal) {
+    //     $scope.facebookReady = true; // You might want to use this to disable/show/hide buttons and else
+    // });
+
+
+    // Create the login modal that we will use later
+    $ionicModal.fromTemplateUrl('templates/login.html', {
+        scope: $scope,
+        animation: 'slide-in-up'
+    }).then(function(modal) {
+        $scope.loginModal = modal;
     });
 
+    // Create the login modal that we will use later
+    $ionicModal.fromTemplateUrl('templates/register.html', {
+        scope: $scope,
+        animation: 'slide-in-up'
+    }).then(function(modal) {
+        $scope.registerModal = modal;
+    });
+
+    $scope.getLogin = function() {
+        $scope.loginModal.show();
+    };
+
+    $scope.getRegister = function() {
+        $scope.registerModal.show();
+    };
+
+    $scope.closeLogin = function() {
+        $scope.loginModal.hide();
+    }
+
+    $scope.closeRegister = function() {
+        $scope.registerModal.hide();
+    }
+
+
     $scope.loggedIn = false;
+
     // From now on you can use the Facebook service just as Facebook api says
     // Take into account that you will need $scope.$apply when inside a Facebook function's scope and not angular
     $scope.login = function() {
+        $scope.loginModal.hide();
         $state.go('main.tab.friends');
         // Facebook.login(function(response) {
         //     // Do something with response. Don't forget here you are on Facebook scope so use $scope.$apply

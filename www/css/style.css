@@ -43,7 +43,7 @@
 .wrap {
     /*background-color:  rgba(250, 191, 41, 0.3);*/
     /*background-color: rgba(0, 0, 0, 0.2);*/
-    margin: 8em 0.8em 2em .8em;
+    margin: 8em 0.8em 0em .8em;
     padding: 2em;
 }
 .ion-icon-intro {
@@ -93,7 +93,22 @@
     background-size: auto 105%;
     background-position: center;
 }
-
+.first {
+    background: url("../img/CITY.jpg");
+    background-size: auto 105%;
+    background-position: center;
+}
+#logo {
+    margin-top: 3.5em;
+    font-size: 4em;
+}
+#slogan {
+    margin-top: 1em;
+    font-size: 2em;
+    color: #ffffff;
+    font-weight: bolder;
+    text-align: center;
+}
 /* 搖一搖 */
 .container {
     margin: -1px;
@@ -157,6 +172,7 @@
 /* shake */
 .scroll {
     height: 100%;
+    width: 100%;
 }
 
 .row-photo {

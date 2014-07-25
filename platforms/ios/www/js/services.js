@@ -64,7 +64,7 @@ angular.module('starter.services', [])
 }])
 
 // module.service( 'serviceName', function );
-.factory('Explore', ['$http', '$q', function($http, $q){
+.factory('Explore', ['$http', '$q',function($http, $q){
 
   // var ExploreData = {
   //   latlng: '(25,121)',
@@ -72,7 +72,6 @@ angular.module('starter.services', [])
   //   size: 6
   // };
 
-  var Explore = {};
 
 
   // var successCallback = function(data, status, headers, config) {
@@ -107,9 +106,15 @@ angular.module('starter.services', [])
   //           return $q.reject(response.data);
   //     });
   //   }
-  // $http.get('http://ezselector.appspot.com/explore?latlng=(25,121)&tags=[%22foods%22]&size=6').success(successCallback).error(errorCallback);
+  // var Explore = {};
+  // $http.get('http://ezselector.appspot.com/explore?latlng=(25,121)&tags=[%22foods%22]&size=6').then(function(res){
+  //     Explore.a = res;
+  //     console.log(Explore.a)
+  // });
 
-  return Explore
+
+
+  return function(latlng, tags, callback){$http.get('http://ezselector.appspot.com/explore?latlng=(25,121)&tags=[%22foods%22]&size=6').then(callback)}
 }])
 
 .factory('FacebookInfo', function(){
@@ -172,4 +177,7 @@ angular.module('starter.services', [])
 
 });
 
+// function getExport(callback){
+//     $http.get('http://ezselector.appspot.com/explore?latlng=(25,121)&tags=[%22foods%22]&size=6').then(callback);
+// }
 
