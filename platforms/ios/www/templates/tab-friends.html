@@ -10,9 +10,9 @@
         </div> -->
 
         <div class="container">
-            <a class="unit-33" ng-repeat="friend in friends" href="#/main/tab/friend/{{friend.id}}">
+            <a class="unit-33" ng-repeat="friend in friends" href="#/main/tab/friend/{{friend.img_id}}">
                 <!-- <div class="mask"><div class="ion-icon ion-heart" data-pack="default" data-tags="love"></div></div> -->
-                <img src="http://photos-e.ak.instagram.com/hphotos-ak-xfp1/10533337_621326867964996_832962868_n.jpg" alt="">
+                <img src="{{friend.img}}" onerror="this.src='http://photos-e.ak.instagram.com/hphotos-ak-xfp1/10533337_621326867964996_832962868_n.jpg'" alt="">
             </a>
         </div>
 

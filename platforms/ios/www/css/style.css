@@ -13,14 +13,14 @@
 /* line 13, ../sass/main.scss */
 
 .record {
-    background: url("http://www.gratisography.com/pictures/62H.jpg");
+    background: url("../img/b.jpg");
     background-size: auto 100%;
     background-position: center;
 }
 /* line 18, ../sass/main.scss */
 
 .recommend {
-    background: url("http://www.gratisography.com/pictures/111H.jpg");
+    background: url("../img/c.jpg");
     background-size: auto 100%;
     background-position: 10%;
 }
@@ -97,6 +97,7 @@
 /* 搖一搖 */
 .container {
     margin: -1px;
+    height: 100%;
 }
 .container:after {
     content: '';
@@ -147,37 +148,41 @@
 
 .mask-2 {
     position: absolute;
-    width: 100%;
-    height: 122px;
+    width: 101%;
+    height: 25%;
     background-color: rgba(0, 0, 0, 0.3);
 }
 
 
 /* shake */
+.scroll {
+    height: 100%;
+}
+
 .row-photo {
     padding:0px;
     width:100%;
-    height:122px;
+    height:25%;
     display: block;
     text-decoration: none;
 }
 .recommend_1 {
-    background: url("http://www.gratisography.com/pictures/62H.jpg");
+    background: url("../img/b.jpg");
     background-size:  100% auto;
     background-position: center;
 }
 .recommend_2 {
-    background: url("http://bit.ly/1epgw26");
+    background: url("../img/f.jpg");
     background-size:  100% auto;
     background-position: center;
 }
 .recommend_3 {
-    background: url("http://www.gratisography.com/pictures/38H.jpg");
+    background: url("../img/a.jpg");
     background-size:  100% auto;
     background-position: center;
 }
 .recommend_4 {
-    background: url("http://bit.ly/1cHletb");
+    background: url("../img/d.jpg");
     background-size:  100% auto;
     background-position: center;
 }

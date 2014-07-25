@@ -63,38 +63,60 @@ angular.module('starter.services', [])
   }
 }])
 
+// module.service( 'serviceName', function );
+.factory('Explore', ['$http', '$q', function($http, $q){
 
-.factory('Explore', ['$http', function($http){
+  // var ExploreData = {
+  //   latlng: '(25,121)',
+  //   tags: '[%22foods%22]',
+  //   size: 6
+  // };
 
-  var ExploreData = {};
-
-  var successCallback = function(data, status, headers, config) {
-      // this callback will be called asynchronously
-      // when the response is available
-      ExploreData = data;
-      console.log(data)
-    };
-
-  var errorCallback = function(data, status, headers, config){
-      console.log(data)
-      alert('error')
-  };
+  var Explore = {};
 
 
-  return {
-    all: function() {
-      $http.get('http://ezselector.appspot.com/explore?latlng=(25,121)&tags=[%22foods%22]&size=6').success(successCallback).error(errorCallback);
-      console.log(ExploreData)
-      return ExploreData
-    }
-  };
+  // var successCallback = function(data, status, headers, config) {
+  //     // this callback will be called asynchronously
+  //     // when the response is available
+  //     Explore.data = data
+  //     // ExploreData = data;
+  //     console.log(Explore.data)
+  //   };
+
+  // var errorCallback = function(data, status, headers, config){
+  //     console.log(data)
+  //     alert('error')
+  // };
+
+  //   function getExplore(){
+  //     var request = $http({
+  //       method: 'GET',
+  //       url: 'http://ezselector.appspot.com/explore?latlng=(25,121)&tags=[%22foods%22]&size=6'
+  //     }).then(function(response) {
+
+  //           if (typeof response.data === 'object') {
+  //              console.log(response)
+  //               return response.data;
+  //           } else {
+  //               // invalid response
+  //               return $q.reject(response.data);
+  //           }
+
+  //       }, function(response) {
+  //           // something went wrong
+  //           return $q.reject(response.data);
+  //     });
+  //   }
+  // $http.get('http://ezselector.appspot.com/explore?latlng=(25,121)&tags=[%22foods%22]&size=6').success(successCallback).error(errorCallback);
+
+  return Explore
 }])
 
 .factory('FacebookInfo', function(){
 
   var FacebookInfo = {
     user: {'name': '訪客'},
-    photo: 'http://board.ek21.com/images/mood1/m1.gif'
+    photo: 'https://pbs.twimg.com/profile_images/378800000576211895/94a4a4b25f5d692cb836baf74b9e64b1_400x400.png'
   };
 
   return FacebookInfo

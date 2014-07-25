@@ -20,7 +20,7 @@ angular.module('starter.controllers', [])
 })
 
 
-.controller('TabsCtrl', function($scope, $state, TakePicture) {
+.controller('TabsCtrl', function($scope, $state, TakePicture, $ionicNavBarDelegate) {
 
     $scope.getPhoto = function() {
         console.log('Getting camera');
@@ -38,28 +38,68 @@ angular.module('starter.controllers', [])
           saveToPhotoAlbum: false
         });
     }
+
+    $scope.navShow = function() {
+        return true
+    }
+    $scope.a = function() {
+
+        $ionicNavBarDelegate.showBar(false);
+    }
+    console.log('上一夜'+$ionicNavBarDelegate.showBar(false))
 })
 
 .controller('PhotoCtrl', function($scope, $state, TakePicture) {
     $scope.lastPhoto = TakePicture.lastPhoto;
 })
 
-.controller('FriendsCtrl', function($scope, Friends) {
-    $scope.friends = Friends.all();
-    $scope.data = (function() {
-        var data = [];
-        var Things = {};
-        Things.length = 21;
-        for (var i = Things.length - 1; i >= 0; i--) {
-            data.push(i)
-        };
-        console.log(data)
-        return data
-    }())
+.controller('FriendsCtrl', function($scope, $http, Friends, Explore) {
+
+
+    $http.get('http://ezselector.appspot.com/explore?latlng=(25,121)&tags=[%22foods%22]&size=60').then(function(res){
+        $scope.friends = res.data;
+        console.log(res)
+        Explore.data = res.data;
+
+    });
+
+
+    // $scope.friends = $http.get('http://ezselector.appspot.com/explore?latlng=(25,121)&tags=[%22foods%22]&size=6').success(successCallback).error(errorCallback);;
+
+    // var successCallback = function(data){
+    //     return data
+    // }
+
+    // var errorCallback = function(data){
+    //     console.log(data)
+    // }
+    // $scope.data = (function() {
+    //     var data = [];
+    //     var Things = {};
+    //     Things.length = 21;
+    //     for (var i = Things.length - 1; i >= 0; i--) {
+    //         data.push(i)
+    //     };
+    //     console.log(data)
+    //     return data
+    // }())
+    // $scope.data = Explore.all();
 })
 
-.controller('FriendDetailCtrl', function($scope, $stateParams, Friends) {
-    $scope.friend = Friends.get($stateParams.friendId);
+.controller('FriendDetailCtrl', function($scope, $stateParams, Friends, Explore) {
+
+    console.log(Explore.data)
+    var index = 0,
+        l = Explore.data.length;
+
+    for (var i = 0; i < l ; i++) {
+        if(Explore.data[i].img_id == $stateParams.friendId){
+            index = i;
+            continue
+        }
+    };
+    $scope.friend = Explore.data[index];
+    console.log($scope.friend)
 })
 
 .controller('ShakeCtrl', function($scope, $ionicPlatform, shakeMenu) {
@@ -99,8 +139,8 @@ angular.module('starter.controllers', [])
 })
 
 .controller('ShakeOptionCtrl', function($scope, $stateParams, $ionicPlatform, shakeMenu, Camera, Explore) {
-    console.log(Explore.all())
-    $scope.explore = Explore.all();
+    // console.log(Explore.all())
+    // $scope.explore = Explore.all();
 
     // $ionicPlatform.ready(function() {
 
@@ -187,31 +227,33 @@ angular.module('starter.controllers', [])
     // From now on you can use the Facebook service just as Facebook api says
     // Take into account that you will need $scope.$apply when inside a Facebook function's scope and not angular
     $scope.login = function() {
-        Facebook.login(function(response) {
-            // Do something with response. Don't forget here you are on Facebook scope so use $scope.$apply
-            if (response.status == 'connected') {
-                $scope.logged = true;
-                $scope.me();
-                // $scope.photo();
-            }
-        });
+        $state.go('main.tab.friends');
+        // Facebook.login(function(response) {
+        //     // Do something with response. Don't forget here you are on Facebook scope so use $scope.$apply
+        //     if (response.status == 'connected') {
+        //         $scope.logged = true;
+        //         $scope.me();
+        //         // $scope.photo();
+        //     }
+        // });
     };
 
     $scope.getLoginStatus = function() {
         //
-        Facebook.getLoginStatus(function(response) {
-            console.log(response)
-            if (response.status == 'connected') {
-                $scope.$apply(function() {
-                    $scope.loggedIn = true;
-                });
-                $scope.me();
-            } else {
-                $scope.$apply(function() {
-                    $scope.loggedIn = false;
-                });
-            }
-        });
+        $state.go('main.tab.friends');
+        // Facebook.getLoginStatus(function(response) {
+        //     console.log(response)
+        //     if (response.status == 'connected') {
+        //         $scope.$apply(function() {
+        //             $scope.loggedIn = true;
+        //         });
+        //         $scope.me();
+        //     } else {
+        //         $scope.$apply(function() {
+        //             $scope.loggedIn = false;
+        //         });
+        //     }
+        // });
     };
 
     $scope.me = function() {
