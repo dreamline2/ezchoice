@@ -19,6 +19,31 @@ angular.module('starter.controllers', [])
     // console.log($rootScope.shareData)
 })
 
+
+.controller('TabsCtrl', function($scope, $state, TakePicture) {
+
+    $scope.getPhoto = function() {
+        console.log('Getting camera');
+        Camera.getPicture().then(function(imageURI) {
+          console.log(imageURI);
+          TakePicture.lastPhoto = imageURI;
+          // $scope.lastPhoto = imageURI;
+          $state.go('main.tab.photo');
+        }, function(err) {
+          console.err(err);
+        }, {
+          quality: 75,
+          targetWidth: 320,
+          targetHeight: 320,
+          saveToPhotoAlbum: false
+        });
+    }
+})
+
+.controller('PhotoCtrl', function($scope, $state, TakePicture) {
+    $scope.lastPhoto = TakePicture.lastPhoto;
+})
+
 .controller('FriendsCtrl', function($scope, Friends) {
     $scope.friends = Friends.all();
     $scope.data = (function() {
@@ -42,10 +67,10 @@ angular.module('starter.controllers', [])
     $ionicPlatform.ready(function() {
 
         navigator.geolocation.getCurrentPosition(onSuccess, onError);
-        // shake.startWatch(onShake);
+        shake.startWatch(onShake);
 
         function onSuccess(position) {
-            var element = document.getElementById('geolocation');
+            // var element = document.getElementById('geolocation');
             var a = 'Latitude: ' + position.coords.latitude + '<br />' +
                 'Longitude: ' + position.coords.longitude + '<br />' +
                 'Altitude: ' + position.coords.altitude + '<br />' +
@@ -77,55 +102,55 @@ angular.module('starter.controllers', [])
     console.log(Explore.all())
     $scope.explore = Explore.all();
 
-    $ionicPlatform.ready(function() {
+    // $ionicPlatform.ready(function() {
 
-        navigator.geolocation.getCurrentPosition(onSuccess, onError);
-        // shake.startWatch(onShake);
+    //     navigator.geolocation.getCurrentPosition(onSuccess, onError);
+    //     // shake.startWatch(onShake);
 
-        function onSuccess(position) {
-            var element = document.getElementById('geolocation');
-            var a = 'Latitude: ' + position.coords.latitude + '<br />' +
-                'Longitude: ' + position.coords.longitude + '<br />' +
-                'Altitude: ' + position.coords.altitude + '<br />' +
-                'Accuracy: ' + position.coords.accuracy + '<br />' +
-                'Altitude Accuracy: ' + position.coords.altitudeAccuracy + '<br />' +
-                'Heading: ' + position.coords.heading + '<br />' +
-                'Speed: ' + position.coords.speed + '<br />' +
-                'Timestamp: ' + position.timestamp + '<br />';
+    //     function onSuccess(position) {
+    //         var element = document.getElementById('geolocation');
+    //         var a = 'Latitude: ' + position.coords.latitude + '<br />' +
+    //             'Longitude: ' + position.coords.longitude + '<br />' +
+    //             'Altitude: ' + position.coords.altitude + '<br />' +
+    //             'Accuracy: ' + position.coords.accuracy + '<br />' +
+    //             'Altitude Accuracy: ' + position.coords.altitudeAccuracy + '<br />' +
+    //             'Heading: ' + position.coords.heading + '<br />' +
+    //             'Speed: ' + position.coords.speed + '<br />' +
+    //             'Timestamp: ' + position.timestamp + '<br />';
 
-            alert(a)
-        }
+    //         alert(a)
+    //     }
 
-        function onError(error) {
-            alert('code: ' + error.code + '\n' +
-                'message: ' + error.message + '\n');
-        }
+    //     function onError(error) {
+    //         alert('code: ' + error.code + '\n' +
+    //             'message: ' + error.message + '\n');
+    //     }
 
-        function onShake() {
-            // Code fired when a shake is detected
-            console.log('搖')
-            alert('快搖')
-        };
+    //     function onShake() {
+    //         // Code fired when a shake is detected
+    //         console.log('搖')
+    //         alert('快搖')
+    //     };
 
 
-    });
+    // });
 
 
     $scope.menu = shakeMenu.get($stateParams.menuId);
 
-    $scope.getPhoto = function() {
-        Camera.getPicture().then(function(imageURI) {
-            console.log(imageURI);
-            $scope.lastPhoto = imageURI;
-        }, function(err) {
-            console.err(err);
-        }, {
-            quality: 100,
-            // targetWidth: 320,
-            // targetHeight: 320,
-            saveToPhotoAlbum: true
-        });
-    };
+    // $scope.getPhoto = function() {
+    //     Camera.getPicture().then(function(imageURI) {
+    //         console.log(imageURI);
+    //         $scope.lastPhoto = imageURI;
+    //     }, function(err) {
+    //         console.err(err);
+    //     }, {
+    //         quality: 100,
+    //         // targetWidth: 320,
+    //         // targetHeight: 320,
+    //         saveToPhotoAlbum: true
+    //     });
+    // };
 
 
 

@@ -100,6 +100,15 @@ angular.module('starter.services', [])
   return FacebookInfo
 })
 
+.factory('TakePicture', function(){
+
+  var TakePicture = {
+    lastPhoto: 'http://board.ek21.com/images/mood1/m1.gif'
+  };
+
+  return TakePicture
+})
+
 
 .factory('Idea', function($http, $window) {
   // $window.APP = $window.APP || {};

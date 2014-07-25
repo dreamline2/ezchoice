@@ -44,7 +44,8 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services', '
       abstract: true,
       views:{
         'menu-content': {
-          templateUrl: "templates/tabs.html"
+          templateUrl: "templates/tabs.html",
+          controller: 'TabsCtrl'
         }
       }
     })
@@ -86,6 +87,16 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services', '
         'tab-account': {
           templateUrl: 'templates/tab-account.html',
           controller: 'AccountCtrl'
+        }
+      }
+    })
+
+    .state('main.tab.photo', {
+      url: '/photo',
+      views: {
+        'tab-account': {
+          templateUrl: 'templates/tab-photo.html',
+          controller: 'PhotoCtrl'
         }
       }
     })
