@@ -7,29 +7,34 @@
             </div>
         </ion-header-bar>
         <ion-content class="has-header padding">
-            <div class="list list-inset">
-                <label class="item item-input">
-                    <input type="text" placeholder="帳號">
-                </label>
-                <label class="item item-input">
-                    <input type="text" placeholder="密碼">
-                </label>
-            </div>
-            <div class="row">
-                <div class="col">
-                    <button class="button button-block button-positive">
-                        馬上登入
-                    </button>
-                </div>
-            </div>
 
-            <div class="row">
-                <div class="col">
-                    <button class="button button-block button-positive" style="margin: 0 auto;border-color: #0D2A58;background-color: #3f5c9a;" ng-click="login()">
-                        Facebook 登入
-                    </button>
+
+            <form name="loginForm" ng-submit="Login(user);">
+                <div class="list list-inset">
+                    <label class="item item-input">
+                        <input type="email" placeholder="帳號" ng-model="user.emailLog" required>
+                    </label>
+                    <label class="item item-input">
+                        <input type="password" placeholder="密碼" ng-model="user.passLog" required>
+                    </label>
                 </div>
-            </div>
+                <div class="row">
+                    <div class="col">
+                        <button class="button button-block button-positive" type="submit">
+                            馬上登入
+                        </button>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col">
+                        <button class="button button-block button-positive" style="margin: 0 auto;border-color: #0D2A58;background-color: #3f5c9a;" ng-click="login()">
+                            Facebook 登入
+                        </button>
+                    </div>
+                </div>
+            </form>
+
+
         </ion-content>
     </div>
 </ion-view>

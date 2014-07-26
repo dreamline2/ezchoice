@@ -28,10 +28,10 @@ angular.module('starter.services', [])
 
 .factory('shakeMenu', [function () {
   var menu = [
-    { id: 0, name: '平價美食' },
-    { id: 1, name: '閒聊簡餐' },
-    { id: 2, name: '高檔美食' },
-    { id: 3, name: '優質空間' }
+    { id: 0, name: '平價美食', tag: 'Parity'},
+    { id: 1, name: '閒聊簡餐', tag: 'Meals'},
+    { id: 2, name: '高檔美食', tag: 'Restaurant'},
+    { id: 3, name: '優質空間', tag: 'Space'}
   ];
 
   return {
@@ -68,12 +68,126 @@ angular.module('starter.services', [])
 .factory('List', function($q, $timeout, $http, api_url) {
 
   var movies = [];
-  $http.get(api_url + 'explore?latlng=(25,121)&tags=[%22foods%22]&size=60').then(function(res){
-    movies = res;
-  });
+
 
   return {
     all: function() {
+
+    $http.get(api_url + 'explore?latlng=(25,121)&tags=[%22foods%22]&size=60').then(function(res){
+      movies = res;
+    });
+      var deferred = $q.defer();
+      $timeout(function() {
+        deferred.resolve(movies);
+      }, 1000);
+      return deferred.promise;
+    },
+    allSync : function() {
+      return movies;
+    },
+    get: function(movieId) {
+      // Simple index lookup
+      for(var i=0, l=movies.length; i < l; i++) {
+        if(movies[i].id == movieId) {
+          return movies[i];
+        }
+      }
+    },
+    pushItem: function(callback){
+      $http.get(api_url + 'explore?latlng=(25,121)&tags=[%22foods%22]&size=60').then(callback);
+    }
+
+
+  }
+})
+
+.factory('Recommend', function($q, $timeout, $http, api_url) {
+
+
+  var movies = [];
+
+  // var tag = JSON.stringify()
+  var para = {
+    latlng: '(25,121)',
+    tags: '[%22foods%22]',
+    size: 6,
+    img_id: ''
+  }
+
+  return {
+    list: [],
+    setSize: function(size){
+      para.size = size;
+    },
+    setLatlng: function(latlng){
+      para.latlng = latlng;
+    },
+    setTags: function(tags){
+      para.tags = tags;
+    },
+    setImgId: function(id){
+      para.img_id = id;
+    },
+    all: function() {
+      $http.get(api_url + 'recommend?tags='+para.tags+'&size='+para.size+'&latlng='+para.latlng+'&img_id='+para.img_id).then(function(res){
+        movies = res;
+      });
+      var deferred = $q.defer();
+      $timeout(function() {
+        deferred.resolve(movies);
+      }, 1000);
+      return deferred.promise;
+    },
+    allSync : function() {
+      $http.get(api_url + 'recommend?tags='+para.tags+'&size='+para.size+'&latlng='+para.latlng+'&img_id='+para.img_id).then(function(res){
+        movies = res;
+      });
+      return movies;
+    },
+    get: function(movieId) {
+      // Simple index lookup
+      for(var i=0, l=movies.length; i < l; i++) {
+        if(movies[i].id == movieId) {
+          return movies[i];
+        }
+      }
+    }
+  }
+
+
+})
+
+
+.factory('Explore', function($q, $timeout, $http, api_url) {
+
+  var movies = [];
+  var para = {
+    latlng: '(25,121)',
+    tags: '[%22foods%22]',
+    size: 6,
+    img_id: ''
+  }
+
+
+
+
+  return {
+    setSize: function(size){
+      para.size = size;
+    },
+    setLatlng: function(latlng){
+      para.latlng = latlng;
+    },
+    setTags: function(tags){
+      para.tags = tags;
+    },
+    setImgId: function(id){
+      para.img_id = id;
+    },
+    all: function() {
+      $http.get(api_url + 'explore?latlng='+para.latlng+'&tags='+para.tags+'&size='+para.size+'&img_id='+para.img_id).then(function(res){
+        movies = res;
+      });
       var deferred = $q.defer();
       $timeout(function() {
         deferred.resolve(movies);
@@ -94,50 +208,74 @@ angular.module('starter.services', [])
   }
 })
 
-
-.factory('Explore', function($q, $timeout, $http, api_url) {
+.factory('Login', function($q, $timeout, $http, api_url) {
 
   var movies = [];
-  var para = {
-    latlng: '(25,121)',
-    tags: '[%22foods%22]',
-    size: 6
-  }
-
-
-
+  var data = {
+    email: '',
+    password: ''
+  };
+  var header = {
+      'Content-Type': 'application/x-www-form-urlencoded'
+  };
 
   return {
-    setSize: function(size){
-      para.size = size;
+    setEmail: function(email){
+      data.email = email;
     },
-    setLatlng: function(latlng){
-      para.latlng = latlng;
+    setPassword: function(password){
+      data.password = password;
     },
-    setTags: function(tags){
-      para.tags = tags;
-    },
-    all: function() {
-      $http.get(api_url + 'explore?latlng='+para.latlng+'&tags='+para.tags+'&size='+para.size).then(function(res){
-        movies = res;
-      });
-      var deferred = $q.defer();
-      $timeout(function() {
-        deferred.resolve(movies);
-      }, 1000);
-      return deferred.promise;
-    },
-    allSync : function() {
-      return movies;
-    },
-    get: function(movieId) {
-      // Simple index lookup
-      for(var i=0, l=movies.length; i < l; i++) {
-        if(movies[i].id == movieId) {
-          return movies[i];
-        }
-      }
+    letGo: function(callback) {
+      console.log(data)
+      // $http.post(api_url + 'login/', header, data).then(callback);
+      $http({
+          url: api_url + "login/",
+          dataType: "json",
+          method: "POST",
+          headers: header,
+          data: data
+      }).success(callback);
     }
+  }
+})
+
+
+.factory('Register', function($q, $http, api_url) {
+
+  var movies = [];
+  var data = {
+    name: '',
+    email: '',
+    password: ''
+  };
+  var header = {
+      'Content-Type': 'application/x-www-form-urlencoded'
+  };
+
+  return {
+    setName: function(name){
+      data.name = name;
+    },
+    setEmail: function(email){
+      data.email = email;
+    },
+    setPassword: function(password){
+      data.password = password;
+    },
+    letGo: function(callback) {
+      console.log(data)
+      // $http.post(api_url + 'signup', "json", data, header).then(callback);
+      $http({
+          url: api_url + "signup/",
+          dataType: "json",
+          method: "POST",
+          headers: header,
+          data: data
+      }).success(callback);
+    }
+
+
   }
 })
 // // module.service( 'serviceName', function );
@@ -198,7 +336,7 @@ angular.module('starter.services', [])
 
   var FacebookInfo = {
     user: {'name': '訪客'},
-    photo: 'https://pbs.twimg.com/profile_images/378800000576211895/94a4a4b25f5d692cb836baf74b9e64b1_400x400.png'
+    photo: 'http://photos-a.ak.instagram.com/hphotos-ak-xpf1/10549703_1508658526032656_168841246_n.jpg'
   };
 
   return FacebookInfo
@@ -294,6 +432,9 @@ angular.module('starter.services', [])
     }
   }
 })
+
+
+
 
 // function getExport(callback){
 //     $http.get('http://ezselector.appspot.com/explore?latlng=(25,121)&tags=[%22foods%22]&size=6').then(callback);
