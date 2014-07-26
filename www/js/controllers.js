@@ -1,49 +1,59 @@
 angular.module('starter.controllers', [])
 
 .controller('DashCtrl', function($scope) {})
-    .controller('FirstCtrl', function($scope, $state) {
-        $scope.goIntro = function() {
-            $state.go('intro');
+.controller('LoginCtrl', function($scope, $state, $ionicModal, Login) {})
+.controller('RegisterCtrl', function($scope, $state, $ionicModal) {})
+
+
+
+
+
+
+
+
+.controller('FirstCtrl', function($scope, $state) {
+    $scope.goIntro = function() {
+        $state.go('intro');
+    }
+})
+
+
+.controller('MenuCtrl', function($scope, $rootScope, FacebookInfo, Login) {
+    if(Login.loginStatus){
+        $scope.user = Login.user;
+        $scope.user.photo = FacebookInfo.photo;
+    }
+
+})
+
+
+.controller('TabsCtrl', function($scope, $rootScope, $state, TakePicture, $ionicNavBarDelegate, Camera) {
+    $rootScope.$on('$stateChangeStart', function(event, toState, toParams, fromState, fromParams){
+        // event.preventDefault();
+        // console.log($ionicNavBarDelegate)
+        // console.log($ionicNavBarDelegate)
+
+        for ( a in toState.views) {
+            for( b in fromState.views) {
+                if(a==b){
+                    $scope.navShow = false;
+                }
+            }
+        };
+
+        if(toState.name == 'main.tab.friends' || toState.name == 'main.tab.shake' || toState.name == 'main.tab.account' ) {
+            $scope.navShow = true;
         }
+
+        console.log(toState.name)
+        console.log('2'+fromState.name)
+
+        // transitionTo() promise will be rejected with
+        // a 'transition prevented' error
     })
-
-.controller('LoginCtrl', function($scope, $state, $ionicModal) {
-    // Create the login modal that we will use later
-    $scope.closeLogin = function() {
-        $scope.modal.hide();
-    }
-})
-
-.controller('RegisterCtrl', function($scope, $state, $ionicModal) {
-    // Create the login modal that we will use later
-    $scope.closeRegister = function() {
-        $scope.modal.hide();
-    }
-})
-
-
-.controller('MenuCtrl', function($scope, $rootScope, FacebookInfo) {
-    // FacebookInfo.readInfo($scope.user, $scope, function(){
-    //     console.log($scope.user)
-    // });
-    // $scope.user = {name:'Wei'};
-    // $rootScope.sampleFunction = function( data ){
-
-    //     console.log(data);
-    //     // your logic
-
-    // };
-    $scope.user = FacebookInfo.user;
-    $scope.user.photo = FacebookInfo.photo;
-    console.log($scope.user)
-    console.log($scope.user.photo)
-    shake.stopWatch();
-    // console.log($rootScope.shareData)
-})
-
-
-.controller('TabsCtrl', function($scope, $state, TakePicture, $ionicNavBarDelegate, Camera) {
-
+        $scope.navShow = function() {
+            return true
+        }
     $scope.getPhoto = function() {
         console.log('Getting camera');
         Camera.getPicture().then(function(imageURI) {
@@ -61,21 +71,35 @@ angular.module('starter.controllers', [])
         });
     }
 
-    $scope.navShow = function() {
-        return true
-    }
+
     $scope.a = function() {
 
         $ionicNavBarDelegate.showBar(false);
     }
-    console.log('上一夜' + $ionicNavBarDelegate.showBar(false))
+
 })
 
-.controller('PhotoCtrl', function($scope, $state, TakePicture) {
+.controller('PhotoCtrl', function($scope, $state, TakePicture, $ionicPopup) {
     $scope.lastPhoto = TakePicture.lastPhoto;
+     $scope.showConfirm = function() {
+       var confirmPopup = $ionicPopup.confirm({
+         title: '確認提交分享',
+         template: '恭喜，這是你想分享的好去處嗎?'
+       });
+       confirmPopup.then(function(res) {
+         if(res) {
+           console.log('You are sure');
+
+           console.log('發 post')
+           $state.go('main.tab.account')
+         } else {
+           console.log('You are not sure');
+         }
+       });
+     };
 })
 
-.controller('FriendsCtrl', function($scope, $http, $ionicBackdrop, $ionicLoading, Friends, Explore, List) {
+.controller('FriendsCtrl', function($scope, $http, $timeout, $ionicBackdrop, $ionicLoading, Friends, Explore, List) {
 
     $scope.show = function() {
         $ionicLoading.show({
@@ -92,27 +116,72 @@ angular.module('starter.controllers', [])
 
     List.all().then(function(res) {
         $scope.hide();
-        $scope.friends = res.data;
+        $scope.friends = res.data.posts;
         console.log(res)
-        Explore.data = res.data;
+        List.data = res.data.posts;
         // console.log(api_url)
     });
+  $scope.onReorder = function(el, start, end) {
+    ionic.Utils.arrayMove($scope.items, start, end);
+  };
+
+  $scope.onRefresh = function() {
+    console.log('ON REFRESH');
+
+    $timeout(function() {
+      $scope.$broadcast('scroll.refreshComplete');
+    }, 1000);
+  }
+  $scope.loadMore = function() {
+    console.log('Loading more!');
+    List.pushItem(function(res){
+        // $scope.hide();
+        // $scope.friends = res.data;
+        for (var i = 0; i < res.data.length; i++) {
+            $scope.friends.push(res.data[i]);
+            // console.log(res.data[i])
+        };
+        // console.log(res)
+        // Explore.data = res.data;
+    });
+
+    $scope.$broadcast('scroll.infiniteScrollComplete');
+  }
+  // $scope.loadMore = function() {
+  //   console.log('loadMore')
+  //   List.pushItem(function(res){
+  //       console.log(res)
+  //       $scope.friends = res.data;
+  //       // console.log(res)
+  //       Explore.data = res.data;
+  //   });
+  //   // $http.get('/more-items').success(function(items) {
+  //   //   useItems(items);
+  //   //   $scope.$broadcast('scroll.infiniteScrollComplete');
+  //   // });
+  // };
+
+  // $scope.$on('stateChangeSuccess', function() {
+  //   $scope.loadMore();
+  // });
+
 
 })
 
-.controller('FriendDetailCtrl', function($scope, $stateParams, Friends, Explore) {
+.controller('FriendDetailCtrl', function($scope, $stateParams, Friends, Explore, List) {
 
-    console.log(Explore.data)
+    console.log(List.data)
     var index = 0,
-        l = Explore.data.length;
-
+        l = List.data.length;
+    console.log($stateParams.friendId)
     for (var i = 0; i < l; i++) {
-        if (Explore.data[i].img_id == $stateParams.friendId) {
+        if (List.data[i].id == $stateParams.friendId) {
             index = i;
             continue
         }
     };
-    $scope.friend = Explore.data[index];
+    console.log(List.data[index])
+    $scope.friend = List.data[index];
     console.log($scope.friend)
 })
 
@@ -120,8 +189,11 @@ angular.module('starter.controllers', [])
     $scope.menu = shakeMenu.all();
 })
 
-.controller('ShakeOptionCtrl', function($scope, $stateParams, $ionicLoading, $ionicBackdrop, $ionicPlatform, shakeMenu, Camera, Explore) {
+.controller('ShakeOptionCtrl', function($scope, $state, $timeout, $rootScope, $stateParams, $ionicLoading, $ionicBackdrop, $ionicPlatform, shakeMenu, Camera, Explore, Recommend) {
 
+    $rootScope.$on('$stateChangeStart', function(event, toState, toParams, fromState, fromParams){
+        shake.stopWatch();
+    })
     $scope.show = function() {
         $ionicLoading.show({
             template: '<i class="icon ion-loading-c" style="font-size:2em;"></i>'
@@ -132,21 +204,21 @@ angular.module('starter.controllers', [])
     $scope.hide = function() {
         $ionicLoading.hide();
     };
-
+    // $scope.items = [
+    //     { text: "HTML5", checked: true },
+    //     { text: "CSS3", checked: false },
+    //     { text: "JavaScript", checked: false },
+    //     { text: "HTML5", checked: true },
+    //     { text: "CSS3", checked: false },
+    //     { text: "JavaScript", checked: false }
+    // ];
 
     $scope.menu = shakeMenu.get($stateParams.menuId);
-
+    // console.log($scope.menu)
     $ionicPlatform.ready(function() {
 
         $scope.show();
-        $scope.items = [
-            { text: "HTML5", checked: true },
-            { text: "CSS3", checked: false },
-            { text: "JavaScript", checked: false },
-            { text: "HTML5", checked: true },
-            { text: "CSS3", checked: false },
-            { text: "JavaScript", checked: false }
-        ];
+
         // 設定參數
         Explore.setSize(6);
         // Explore.setLatlng('(25,121)');
@@ -157,13 +229,17 @@ angular.module('starter.controllers', [])
 
         $scope.checkItem = function(i){
             // $scope.items
-            console.log(i)
+            // console.log(i)
+            // console.log($scope.cards[i])
+            $scope.cards[i].checked = !$scope.cards[i].checked;
+            // $scope.refresh();
+            // $scope.items[i].checked;
             // $scope.items.checked
             // return $scope.items[$index].checked
         }
 
         navigator.geolocation.getCurrentPosition(onSuccess, onError);
-        // shake.startWatch(onShake);
+        shake.startWatch(onShake);
 
         function onSuccess(position) {
             // var element = document.getElementById('geolocation');
@@ -175,13 +251,25 @@ angular.module('starter.controllers', [])
             //     'Heading: ' + position.coords.heading + '<br />' +
             //     'Speed: ' + position.coords.speed + '<br />' +
             //     'Timestamp: ' + position.timestamp + '<br />';
-
+            $scope.position = position;
             // console.log(a)
             Explore.setLatlng('('+position.coords.latitude+','+position.coords.longitude+')');
+
+
+
+
+            var tags = JSON.stringify([$scope.menu.tag]);
+
+            // console.log(tags)
+
+            Explore.setSize(6);
+            Explore.setLatlng('('+$scope.position.coords.latitude+','+$scope.position.coords.longitude+')');
+            Explore.setTags(tags);
+            Explore.setImgId();
             Explore.all().then(function(res) {
                 $scope.hide();
                 $scope.cards = res.data;
-                console.log(res.data)
+                // console.log(res.data)
                 // Explore.cards = res.data;
                 // console.log(api_url)
             });
@@ -196,10 +284,72 @@ angular.module('starter.controllers', [])
             // Code fired when a shake is detected
             // console.log('搖')
             alert('快搖')
+            Explore.setSize(6);
+            Explore.setLatlng('('+$scope.position.coords.latitude+','+$scope.position.coords.longitude+')');
+            Explore.setTags(tags);
+            Explore.setImgId();
+            Explore.all().then(function(res) {
+                // $scope.hide();
+                $scope.cards = res.data;
+                // console.log(res.data)
+                // Explore.cards = res.data;
+                // console.log(api_url)
+            });
         };
 
 
     });
+  $scope.onRefresh = function() {
+    console.log('ON REFRESH');
+
+
+    var tag = [];
+
+    for(var i =0;i<$scope.cards.length;i++){
+        if($scope.cards[i].checked == true){
+
+            console.log($scope.cards[i])
+            for(var j = 0; j< $scope.cards[i].tags.length;j++){
+                tag.push($scope.cards[i].tags[j])
+            }
+
+        }
+
+    }
+
+    var tags = JSON.stringify(tag);
+
+    console.log(tags)
+
+    Recommend.setSize(6);
+    Recommend.setLatlng('('+$scope.position.coords.latitude+','+$scope.position.coords.longitude+')');
+    Recommend.setTags(tags);
+    Recommend.setImgId();
+    Recommend.all().then(function(res){
+        // $scope.hide();
+        // $scope.friends = res.data;
+        // for (var i = 0; i < res.data.length; i++) {
+        //     $scope.friends.push(res.data[i]);
+        //     // console.log(res.data[i])
+        // };
+        // allSync()
+
+        // $scope.cards[i].tags
+        // $scope.items = res.data;
+        Recommend.list = res.data;
+        $scope.$broadcast('scroll.refreshComplete');
+        $state.go('main.tab.recommend');
+        // console.log(res.data)
+        // $scope.$broadcast('scroll.refreshComplete');
+        // console.log(res)
+        // Explore.data = res.data;
+    });
+    // $timeout(function() {
+    //   $scope.$broadcast('scroll.refreshComplete');
+    //   // $state.go('main.tab.recommend');
+    // }, 1000);
+  }
+
 })
 
 .controller('AccountCtrl', function($scope, $ionicLoading, $ionicBackdrop, Record) {
@@ -242,7 +392,7 @@ angular.module('starter.controllers', [])
 })
 
 
-.controller('IntroCtrl', function($rootScope, $scope, $state, $ionicSlideBoxDelegate, $ionicModal, Facebook, FacebookInfo) {
+.controller('IntroCtrl', function($rootScope, $scope, $state, $ionicSlideBoxDelegate, $ionicModal, $ionicPopup, Facebook, FacebookInfo, Login, Register) {
     // Here, usually you should watch for when Facebook is ready and loaded
     // $scope.$watch(function() {
     //     return Facebook.isReady(); // This is for convenience, to notify if Facebook is loaded and ready to go.
@@ -283,11 +433,69 @@ angular.module('starter.controllers', [])
         $scope.registerModal.hide();
     }
 
+     $scope.showAlert = function() {
+       var alertPopup = $ionicPopup.alert({
+         title: 'Don\'t eat that!',
+         template: 'It might taste good'
+       });
+       alertPopup.then(function(res) {
+         console.log('Thank you for not eating my delicious ice cream cone');
+       });
+     };
 
     $scope.loggedIn = false;
 
     // From now on you can use the Facebook service just as Facebook api says
     // Take into account that you will need $scope.$apply when inside a Facebook function's scope and not angular
+    // $scope.show = function() {
+    //     $ionicLoading.show({
+    //         template: '<i class="icon ion-loading-c" style="font-size:2em;"></i>'
+    //     });
+    //     $ionicBackdrop.release();
+    // };
+
+    // $scope.hide = function() {
+    //     $ionicLoading.hide();
+    // };
+
+    // $scope.show();
+    $scope.user = {};
+    $scope.user.emailLog = "";
+    $scope.user.passLog  = "";
+
+    $scope.newUser = {};
+    $scope.user.userName = "";
+    $scope.user.email  = "";
+    $scope.user.password  = "";
+    // var emailLog = $scope.emailLog != null?$scope.emailLog:'';
+    // var passLog = $scope.passLog != null?$scope.passLog:'';
+    $scope.Login = function(user) {
+        console.log(user.emailLog+','+user.passLog+','+user)
+
+        Login.setEmail(user.emailLog);
+        Login.setPassword(user.passLog);
+        Login.letGo(function(res){
+            Login.loginStatus = true;
+            Login.user = res.DATA;
+            console.log(res)
+            $scope.loginModal.hide();
+            $state.go('main.tab.friends');
+        });
+
+    }
+
+    $scope.Register = function(user) {
+        // console.log(user.userName+','+user.email+','+user.password)
+        console.log(Register)
+        Register.setName(user.userName);
+        Register.setEmail(user.email);
+        Register.setPassword(user.password);
+        Register.letGo(function(res){
+            console.log(res)
+            $scope.registerModal.hide();
+            // $state.go('main.tab.friends');
+        });
+    }
     $scope.login = function() {
         $scope.loginModal.hide();
         $state.go('main.tab.friends');
@@ -384,4 +592,9 @@ angular.module('starter.controllers', [])
     $scope.slideChanged = function(index) {
         $scope.slideIndex = index;
     };
+})
+.controller('RecommendCtrl', function($scope, $state, $ionicModal, Recommend) {
+
+    $scope.items = Recommend.list;
+
 })

@@ -1,8 +1,21 @@
 <ion-view title="分享好去處">
-    <ion-content class="has-header" padding="true">
-        <img ng-src="{{lastPhoto}}" style="max-width: 100%">
-        <button class="button button-block button-positive">
-            分享
-        </button>
+    <ion-content class="has-header">
+
+        <div class="list card" style="margin-bottom:30px;">
+
+            <div class="item item-image">
+                <img ng-src="{{lastPhoto}}" style="max-width: 100%">
+            </div>
+            <div class="item item-avatar">
+                <img style="max-width: 50px;max-height: 50px;" src="https://fbcdn-profile-a.akamaihd.net/hprofile-ak-xfa1/t1.0-1/p100x100/10314011_10202684084237605_1762184246269689844_n.jpg">
+                <input type="text" placeholder="在想些什麼?" style="padding-left: 10px;">
+            </div>
+
+            <div class="item item-icon-left assertive" ng-click="showConfirm();">
+                <i class="icon ion-android-checkmark" style="margin-left: 12px;"></i>
+                <p id="publish">分享你的好去處</p>
+            </div>
+
+        </div>
     </ion-content>
 </ion-view>

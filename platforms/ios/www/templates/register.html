@@ -7,17 +7,20 @@
         </div>
     </ion-header-bar>
     <ion-content class="has-header padding">
-        <div class="list list-inset">
-            <label class="item item-input">
-                <input type="text" placeholder="使用者名稱">
-            </label>
-            <label class="item item-input">
-                <input type="text" placeholder="電子信箱">
-            </label>
-            <label class="item item-input">
-                <input type="password" placeholder="密碼">
-            </label>
-        </div>
+
+
+        <form name="loginForm" ng-submit="Register(newUser);">
+            <div class="list list-inset">
+                <label class="item item-input">
+                    <input type="text" placeholder="使用者名稱" ng-model="newUser.userName" required>
+                </label>
+                <label class="item item-input">
+                    <input type="email" placeholder="電子信箱" ng-model="newUser.email" required>
+                </label>
+                <label class="item item-input">
+                    <input type="password" placeholder="密碼" ng-model="newUser.password" required>
+                </label>
+            </div>
             <div class="row">
                 <div class="col">
                     <button class="button button-block button-positive">
@@ -27,11 +30,12 @@
             </div>
             <div class="row">
                 <div class="col">
-                    <button class="button button-block button-positive">
+                    <button class="button button-block button-positive" style="margin: 0 auto;border-color: #0D2A58;background-color: #3f5c9a;"type="submit">
                         建立帳號
                     </button>
                 </div>
             </div>
+        </form>
     </ion-content>
 </div>
 </ion-view>

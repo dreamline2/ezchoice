@@ -1,20 +1,13 @@
 <ion-view title="探索最佳地點">
-    <ion-content class="has-header">
-
-        <!--  search  -->
-<!--         <div class="list list-inset" style="background:#ff0000;">
-            <label class="item item-input">
-                <i class="icon ion-search placeholder-icon"></i>
-                <input type="text" placeholder="Search">
-            </label>
-        </div> -->
-        <!-- <button ng-click="scrollTop()">Scroll to Top!</button> -->
-        <div class="container">
-            <a class="unit-33" ng-repeat="friend in friends" href="#/main/tab/friend/{{friend.img_id}}">
-                <!-- <div class="mask"><div class="ion-icon ion-heart" data-pack="default" data-tags="love"></div></div> -->
-                <img src="{{friend.img}}" onerror="this.src='http://photos-e.ak.instagram.com/hphotos-ak-xfp1/10533337_621326867964996_832962868_n.jpg'" alt="">
+    <ion-content class="has-header" has-header="true" has-tabs="true" scroll-detector>
+<!--         <ion-infinite-scroll on-infinite="loadMore()" >
+        </ion-infinite-scroll> -->
+        <ion-refresher pulling-text="探索中..." on-refresh="onRefresh()">
+        </ion-refresher>
+        <div class="container" on-reorder="onReorder(el, start, end)">
+            <a class="unit-33" ng-repeat="friend in friends" href="#/main/tab/friend/{{friend.id}}">
+                <img src="{{friend.image}}" onerror="this.src='http://photos-e.ak.instagram.com/hphotos-ak-xfp1/10533337_621326867964996_832962868_n.jpg'" alt="">
             </a>
         </div>
-
     </ion-content>
 </ion-view>
