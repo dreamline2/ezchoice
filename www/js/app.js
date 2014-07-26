@@ -6,7 +6,7 @@
 // 'starter.services' is found in services.js
 // 'starter.controllers' is found in controllers.js
 angular.module('starter', ['ionic', 'starter.services', 'starter.controllers', 'facebook'])
-
+.constant('api_url', 'http://ezselector.appspot.com/')//http://192.168.33.15:8080
 .run(function($ionicPlatform) {
   $ionicPlatform.ready(function() {
     // Hide the accessory bar by default (remove this to show the accessory bar above the keyboard
@@ -28,7 +28,7 @@ angular.module('starter', ['ionic', 'starter.services', 'starter.controllers', '
   // Learn more here: https://github.com/angular-ui/ui-router
   // Set up the various states which the app can be in.
   // Each state's controller can be found in controllers.js
-  FacebookProvider.init('331977093624693');
+  // FacebookProvider.init('331977093624693');
   $stateProvider
 
     // setup an abstract state for the tabs directive

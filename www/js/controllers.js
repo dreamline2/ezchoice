@@ -1,24 +1,24 @@
 angular.module('starter.controllers', [])
 
 .controller('DashCtrl', function($scope) {})
-.controller('FirstCtrl', function($scope, $state) {
-    $scope.goIntro = function(){
-        $state.go('intro');
-    }
-})
+    .controller('FirstCtrl', function($scope, $state) {
+        $scope.goIntro = function() {
+            $state.go('intro');
+        }
+    })
 
 .controller('LoginCtrl', function($scope, $state, $ionicModal) {
     // Create the login modal that we will use later
-  $scope.closeLogin = function() {
-    $scope.modal.hide();
-  }
+    $scope.closeLogin = function() {
+        $scope.modal.hide();
+    }
 })
 
 .controller('RegisterCtrl', function($scope, $state, $ionicModal) {
     // Create the login modal that we will use later
-  $scope.closeRegister = function() {
-    $scope.modal.hide();
-  }
+    $scope.closeRegister = function() {
+        $scope.modal.hide();
+    }
 })
 
 
@@ -47,17 +47,17 @@ angular.module('starter.controllers', [])
     $scope.getPhoto = function() {
         console.log('Getting camera');
         Camera.getPicture().then(function(imageURI) {
-          console.log(imageURI);
-          TakePicture.lastPhoto = imageURI;
-          // $scope.lastPhoto = imageURI;
-          $state.go('main.tab.photo');
+            console.log(imageURI);
+            TakePicture.lastPhoto = imageURI;
+            // $scope.lastPhoto = imageURI;
+            $state.go('main.tab.photo');
         }, function(err) {
-          console.err(err);
+            console.err(err);
         }, {
-          quality: 75,
-          targetWidth: 320,
-          targetHeight: 320,
-          saveToPhotoAlbum: false
+            quality: 75,
+            targetWidth: 320,
+            targetHeight: 320,
+            saveToPhotoAlbum: false
         });
     }
 
@@ -68,81 +68,36 @@ angular.module('starter.controllers', [])
 
         $ionicNavBarDelegate.showBar(false);
     }
-    console.log('上一夜'+$ionicNavBarDelegate.showBar(false))
+    console.log('上一夜' + $ionicNavBarDelegate.showBar(false))
 })
 
 .controller('PhotoCtrl', function($scope, $state, TakePicture) {
     $scope.lastPhoto = TakePicture.lastPhoto;
 })
 
-.controller('FriendsCtrl', function($scope, $http, $ionicBackdrop, $ionicLoading, Friends, Explore) {
-    // function init(Explore){
+.controller('FriendsCtrl', function($scope, $http, $ionicBackdrop, $ionicLoading, Friends, Explore, List) {
 
-    // var data = {
-    //     latlng: '(25,121)',
-    //     tags: '[%22foods%22]',
-    //     size: 60
-    // };
-    // var str = '';
-    // for (var i = Things.length - 1; i >= 0; i--) {
-    //     str +=
-    // };
-
-    // Explore(latlng=latlng, tags=tags, function(resp){console.log('!!!!!'+JSON.stringify(resp.data))})
-
-      $scope.show = function() {
+    $scope.show = function() {
         $ionicLoading.show({
-          template: '<i class="icon ion-loading-c" style="font-size:2em;"></i>'
+            template: '<i class="icon ion-loading-c" style="font-size:2em;"></i>'
         });
         $ionicBackdrop.release();
-      };
-      $scope.show();
-      $scope.hide = function(){
-        $ionicLoading.hide();
-      };
+    };
 
-      // http://192.168.33.15:8080
-     $http.get('http://ezselector.appspot.com/explore?latlng=(25,121)&tags=[%22foods%22]&size=60').then(function(res){
-    // $http.get('http://192.168.33.15:8080/explore?latlng=(25,121)&tags=[%22foods%22]&size=60').then(function(res){
+    $scope.hide = function() {
+        $ionicLoading.hide();
+    };
+
+    $scope.show();
+
+    List.all().then(function(res) {
         $scope.hide();
         $scope.friends = res.data;
         console.log(res)
         Explore.data = res.data;
-
-
+        // console.log(api_url)
     });
 
-    //       $http.get('http://ezselector.appspot.com/explore?latlng=(25,121)&tags=[%22foods%22]&size=60').then(function(res){
-    //     $scope.hide();
-    //     $scope.friends = res.data;
-    //     console.log(res)
-    //     Explore.data = res.data;
-
-
-    // });
-// }
-
-    // getExport(Explore)
-    // $scope.friends = $http.get('http://ezselector.appspot.com/explore?latlng=(25,121)&tags=[%22foods%22]&size=6').success(successCallback).error(errorCallback);;
-
-    // var successCallback = function(data){
-    //     return data
-    // }
-
-    // var errorCallback = function(data){
-    //     console.log(data)
-    // }
-    // $scope.data = (function() {
-    //     var data = [];
-    //     var Things = {};
-    //     Things.length = 21;
-    //     for (var i = Things.length - 1; i >= 0; i--) {
-    //         data.push(i)
-    //     };
-    //     console.log(data)
-    //     return data
-    // }())
-    // $scope.data = Explore.all();
 })
 
 .controller('FriendDetailCtrl', function($scope, $stateParams, Friends, Explore) {
@@ -151,8 +106,8 @@ angular.module('starter.controllers', [])
     var index = 0,
         l = Explore.data.length;
 
-    for (var i = 0; i < l ; i++) {
-        if(Explore.data[i].img_id == $stateParams.friendId){
+    for (var i = 0; i < l; i++) {
+        if (Explore.data[i].img_id == $stateParams.friendId) {
             index = i;
             continue
         }
@@ -165,62 +120,71 @@ angular.module('starter.controllers', [])
     $scope.menu = shakeMenu.all();
 })
 
-.controller('ShakeOptionCtrl', function($scope, $stateParams, $ionicPlatform, shakeMenu, Camera, Explore) {
-    // console.log(Explore.all())
-    // $scope.explore = Explore.all();
+.controller('ShakeOptionCtrl', function($scope, $stateParams, $ionicLoading, $ionicBackdrop, $ionicPlatform, shakeMenu, Camera, Explore) {
 
-    // $ionicPlatform.ready(function() {
+    $scope.show = function() {
+        $ionicLoading.show({
+            template: '<i class="icon ion-loading-c" style="font-size:2em;"></i>'
+        });
+        $ionicBackdrop.release();
+    };
 
-    //     navigator.geolocation.getCurrentPosition(onSuccess, onError);
-    //     // shake.startWatch(onShake);
-
-    //     function onSuccess(position) {
-    //         var element = document.getElementById('geolocation');
-    //         var a = 'Latitude: ' + position.coords.latitude + '<br />' +
-    //             'Longitude: ' + position.coords.longitude + '<br />' +
-    //             'Altitude: ' + position.coords.altitude + '<br />' +
-    //             'Accuracy: ' + position.coords.accuracy + '<br />' +
-    //             'Altitude Accuracy: ' + position.coords.altitudeAccuracy + '<br />' +
-    //             'Heading: ' + position.coords.heading + '<br />' +
-    //             'Speed: ' + position.coords.speed + '<br />' +
-    //             'Timestamp: ' + position.timestamp + '<br />';
-
-    //         alert(a)
-    //     }
-
-    //     function onError(error) {
-    //         alert('code: ' + error.code + '\n' +
-    //             'message: ' + error.message + '\n');
-    //     }
-
-    //     function onShake() {
-    //         // Code fired when a shake is detected
-    //         console.log('搖')
-    //         alert('快搖')
-    //     };
-
-
-    // });
+    $scope.hide = function() {
+        $ionicLoading.hide();
+    };
 
 
     $scope.menu = shakeMenu.get($stateParams.menuId);
+
     $ionicPlatform.ready(function() {
 
+        $scope.show();
+        $scope.items = [
+            { text: "HTML5", checked: true },
+            { text: "CSS3", checked: false },
+            { text: "JavaScript", checked: false },
+            { text: "HTML5", checked: true },
+            { text: "CSS3", checked: false },
+            { text: "JavaScript", checked: false }
+        ];
+        // 設定參數
+        Explore.setSize(6);
+        // Explore.setLatlng('(25,121)');
+        var tags = JSON.stringify(["food"]);
+        Explore.setTags(tags);
+
+        console.log(Explore.allSync())
+
+        $scope.checkItem = function(i){
+            // $scope.items
+            console.log(i)
+            // $scope.items.checked
+            // return $scope.items[$index].checked
+        }
+
         navigator.geolocation.getCurrentPosition(onSuccess, onError);
-        shake.startWatch(onShake);
+        // shake.startWatch(onShake);
 
         function onSuccess(position) {
             // var element = document.getElementById('geolocation');
-            var a = 'Latitude: ' + position.coords.latitude + '<br />' +
-                'Longitude: ' + position.coords.longitude + '<br />' +
-                'Altitude: ' + position.coords.altitude + '<br />' +
-                'Accuracy: ' + position.coords.accuracy + '<br />' +
-                'Altitude Accuracy: ' + position.coords.altitudeAccuracy + '<br />' +
-                'Heading: ' + position.coords.heading + '<br />' +
-                'Speed: ' + position.coords.speed + '<br />' +
-                'Timestamp: ' + position.timestamp + '<br />';
+            // var a = 'Latitude: ' + position.coords.latitude + '<br />' +
+            //     'Longitude: ' + position.coords.longitude + '<br />' +
+            //     'Altitude: ' + position.coords.altitude + '<br />' +
+            //     'Accuracy: ' + position.coords.accuracy + '<br />' +
+            //     'Altitude Accuracy: ' + position.coords.altitudeAccuracy + '<br />' +
+            //     'Heading: ' + position.coords.heading + '<br />' +
+            //     'Speed: ' + position.coords.speed + '<br />' +
+            //     'Timestamp: ' + position.timestamp + '<br />';
 
-            alert(a)
+            // console.log(a)
+            Explore.setLatlng('('+position.coords.latitude+','+position.coords.longitude+')');
+            Explore.all().then(function(res) {
+                $scope.hide();
+                $scope.cards = res.data;
+                console.log(res.data)
+                // Explore.cards = res.data;
+                // console.log(api_url)
+            });
         }
 
         function onError(error) {
@@ -230,46 +194,51 @@ angular.module('starter.controllers', [])
 
         function onShake() {
             // Code fired when a shake is detected
-            console.log('搖')
+            // console.log('搖')
             alert('快搖')
         };
 
 
     });
-    // $scope.getPhoto = function() {
-    //     Camera.getPicture().then(function(imageURI) {
-    //         console.log(imageURI);
-    //         $scope.lastPhoto = imageURI;
-    //     }, function(err) {
-    //         console.err(err);
-    //     }, {
-    //         quality: 100,
-    //         // targetWidth: 320,
-    //         // targetHeight: 320,
-    //         saveToPhotoAlbum: true
-    //     });
-    // };
-
-
-
-
 })
 
-.controller('AccountCtrl', function($scope, Idea) {
-    console.log(Idea.all());
-    $scope.cards = [{
-        id: 1,
-        title: 'Pretty Hate Machine',
-        desc: 'Nine Inch Nails',
-        avatar: 'https://fbcdn-profile-a.akamaihd.net/hprofile-ak-xfa1/t1.0-1/p50x50/10314011_10202684084237605_1762184246269689844_n.jpg',
-        img: 'https://s3.amazonaws.com/ooomf-com-files/yIdlmSvfSZCyGkCkLt0P_lucaslof_2.jpg'
-    }, {
-        id: 2,
-        title: 'Hate Machine',
-        desc: 'Inch Nails',
-        avatar: 'https://fbcdn-profile-a.akamaihd.net/hprofile-ak-prn2/t1.0-1/c94.42.526.526/s160x160/1010245_663304503685007_1056281799_n.jpg',
-        img: 'https://s3.amazonaws.com/ooomf-com-files/0S2u9VCRR1q74bwBQyA1__MG_9988.JPG'
-    }];
+.controller('AccountCtrl', function($scope, $ionicLoading, $ionicBackdrop, Record) {
+
+    $scope.show = function() {
+        $ionicLoading.show({
+            template: '<i class="icon ion-loading-c" style="font-size:2em;"></i>'
+        });
+        $ionicBackdrop.release();
+    };
+
+    $scope.hide = function() {
+        $ionicLoading.hide();
+    };
+
+    $scope.show();
+
+    Record.all().then(function(res) {
+        $scope.hide();
+        $scope.cards = res.data;
+        console.log(res.data)
+        // Explore.cards = res.data;
+        // console.log(api_url)
+    });
+
+
+    // $scope.cards = [{
+    //     id: 1,
+    //     title: 'Pretty Hate Machine',
+    //     desc: 'Nine Inch Nails',
+    //     avatar: 'https://fbcdn-profile-a.akamaihd.net/hprofile-ak-xfa1/t1.0-1/p50x50/10314011_10202684084237605_1762184246269689844_n.jpg',
+    //     img: 'https://s3.amazonaws.com/ooomf-com-files/yIdlmSvfSZCyGkCkLt0P_lucaslof_2.jpg'
+    // }, {
+    //     id: 2,
+    //     title: 'Hate Machine',
+    //     desc: 'Inch Nails',
+    //     avatar: 'https://fbcdn-profile-a.akamaihd.net/hprofile-ak-prn2/t1.0-1/c94.42.526.526/s160x160/1010245_663304503685007_1056281799_n.jpg',
+    //     img: 'https://s3.amazonaws.com/ooomf-com-files/0S2u9VCRR1q74bwBQyA1__MG_9988.JPG'
+    // }];
 })
 
 
