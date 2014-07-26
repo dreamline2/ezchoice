@@ -37,6 +37,7 @@ angular.module('starter.controllers', [])
     $scope.user.photo = FacebookInfo.photo;
     console.log($scope.user)
     console.log($scope.user.photo)
+    shake.stopWatch();
     // console.log($rootScope.shareData)
 })
 
@@ -74,7 +75,7 @@ angular.module('starter.controllers', [])
     $scope.lastPhoto = TakePicture.lastPhoto;
 })
 
-.controller('FriendsCtrl', function($scope, $http, Friends, Explore) {
+.controller('FriendsCtrl', function($scope, $http, $ionicBackdrop, $ionicLoading, Friends, Explore) {
     // function init(Explore){
 
     // var data = {
@@ -88,12 +89,37 @@ angular.module('starter.controllers', [])
     // };
 
     // Explore(latlng=latlng, tags=tags, function(resp){console.log('!!!!!'+JSON.stringify(resp.data))})
+
+      $scope.show = function() {
+        $ionicLoading.show({
+          template: '<i class="icon ion-loading-c" style="font-size:2em;"></i>'
+        });
+        $ionicBackdrop.release();
+      };
+      $scope.show();
+      $scope.hide = function(){
+        $ionicLoading.hide();
+      };
+
+      // http://192.168.33.15:8080
      $http.get('http://ezselector.appspot.com/explore?latlng=(25,121)&tags=[%22foods%22]&size=60').then(function(res){
+    // $http.get('http://192.168.33.15:8080/explore?latlng=(25,121)&tags=[%22foods%22]&size=60').then(function(res){
+        $scope.hide();
         $scope.friends = res.data;
         console.log(res)
         Explore.data = res.data;
 
+
     });
+
+    //       $http.get('http://ezselector.appspot.com/explore?latlng=(25,121)&tags=[%22foods%22]&size=60').then(function(res){
+    //     $scope.hide();
+    //     $scope.friends = res.data;
+    //     console.log(res)
+    //     Explore.data = res.data;
+
+
+    // });
 // }
 
     // getExport(Explore)
@@ -137,38 +163,6 @@ angular.module('starter.controllers', [])
 
 .controller('ShakeCtrl', function($scope, $ionicPlatform, shakeMenu) {
     $scope.menu = shakeMenu.all();
-    $ionicPlatform.ready(function() {
-
-        navigator.geolocation.getCurrentPosition(onSuccess, onError);
-        shake.startWatch(onShake);
-
-        function onSuccess(position) {
-            // var element = document.getElementById('geolocation');
-            var a = 'Latitude: ' + position.coords.latitude + '<br />' +
-                'Longitude: ' + position.coords.longitude + '<br />' +
-                'Altitude: ' + position.coords.altitude + '<br />' +
-                'Accuracy: ' + position.coords.accuracy + '<br />' +
-                'Altitude Accuracy: ' + position.coords.altitudeAccuracy + '<br />' +
-                'Heading: ' + position.coords.heading + '<br />' +
-                'Speed: ' + position.coords.speed + '<br />' +
-                'Timestamp: ' + position.timestamp + '<br />';
-
-            alert(a)
-        }
-
-        function onError(error) {
-            alert('code: ' + error.code + '\n' +
-                'message: ' + error.message + '\n');
-        }
-
-        function onShake() {
-            // Code fired when a shake is detected
-            console.log('搖')
-            alert('快搖')
-        };
-
-
-    });
 })
 
 .controller('ShakeOptionCtrl', function($scope, $stateParams, $ionicPlatform, shakeMenu, Camera, Explore) {
@@ -210,7 +204,38 @@ angular.module('starter.controllers', [])
 
 
     $scope.menu = shakeMenu.get($stateParams.menuId);
+    $ionicPlatform.ready(function() {
 
+        navigator.geolocation.getCurrentPosition(onSuccess, onError);
+        shake.startWatch(onShake);
+
+        function onSuccess(position) {
+            // var element = document.getElementById('geolocation');
+            var a = 'Latitude: ' + position.coords.latitude + '<br />' +
+                'Longitude: ' + position.coords.longitude + '<br />' +
+                'Altitude: ' + position.coords.altitude + '<br />' +
+                'Accuracy: ' + position.coords.accuracy + '<br />' +
+                'Altitude Accuracy: ' + position.coords.altitudeAccuracy + '<br />' +
+                'Heading: ' + position.coords.heading + '<br />' +
+                'Speed: ' + position.coords.speed + '<br />' +
+                'Timestamp: ' + position.timestamp + '<br />';
+
+            alert(a)
+        }
+
+        function onError(error) {
+            alert('code: ' + error.code + '\n' +
+                'message: ' + error.message + '\n');
+        }
+
+        function onShake() {
+            // Code fired when a shake is detected
+            console.log('搖')
+            alert('快搖')
+        };
+
+
+    });
     // $scope.getPhoto = function() {
     //     Camera.getPicture().then(function(imageURI) {
     //         console.log(imageURI);
